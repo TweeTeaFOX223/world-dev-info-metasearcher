@@ -1,30 +1,33 @@
 # world-dev-info-metasearcher
-
+![screenshot](https://raw.githubusercontent.com/TweeTeaFOX223/world-dev-info-metasearcher/refs/heads/main/ScreenShot.png)
 ## アプリの概要
-World Dev Info Searcher（WDIF）は、複数の検索エンジンやサイトを横断検索できるシンプルなメタ検索エンジンです。
+World Dev Info Searcher（WDIF）は、Claude Codeでサクッと開発した軽量メタ検索エンジンです。検索窓に単語を入力してエンターすると、開発技術＋αの情報収集に有用と思われる検索結果のURLのリストを表示します。
 
-`./src/data/searchEngines.json`を書き換えることで使用する検索エンジンをカスタムすることが可能です。
 
-`npm run build-offline`で生成した単一のHTMLファイルは、サーバー不要でローカルで動作します(DLしてブラウザで直接開くだけで動きます)。
+- `./src/data/searchEngines.json`を書き換えた後にビルドすることで、使用する検索エンジンをカスタムすることが可能です。
+- サーバー不要でローカルのブラウザから直接開く(fileプロトコルで開く)だけで動作する、単一HTMLファイルにビルドすることが可能です。→`npm run build-offline`。LINEやDiscordやメールでHTMLファイルを送るだけでアプリの共有が可能です。
+- アプリ(HTMLファイル)のサイズは50KB程度で非常に小さいです（Preactをフレームワークに採用しているため）。
+- 検索結果URLを生成する処理はクライアント上(ブラウザ内)で行われます。単一HTMLファイルを開いて使用する場合だとプライバシー的に安全です。※GitHub PagesのやつだとGitHub側に検索クエリが記録される可能性があるので一応注意です。
 
-このような特徴があります。
 
-- **単一HTMLファイル**: `dist-offline/index.html` 1ファイルで動作
-- **タブ機能**: 検索カテゴリをタブで切り替え
-- **カスタマイズ可能**: JSONファイルで検索エンジンを簡単に追加・削除
-- **レスポンシブデザイン**: モバイルにも対応
-- **軽量**: ファイルサイズ < 200KB
-- **プライバシー重視**: 検索結果は各サイトへのリンクのみ生成
 
-## ★このアプリを今すぐ使用する！
-**このリポジトリのGitHub Pagesにアクセスすると使えます**
+## ★このアプリを今すぐ使用！
+### 方法A：GitHub Pagesにアクセス
+このリポジトリのGitHub Pagesにアクセスすると使えます**。初期状態では「Preact 2025」の検索結果のリストを表示します。
+**https://tweeteafox223.github.io/world-dev-info-metasearcher/?q=Preact+2025**
 
-**以下のリンクから`dist-offline/index.html`を、PCやスマホにダウンロードしてブラウザで開くのでも使えます！**
+### 方法B：HTMLをDLしてブラウザで開く
+**方法B：下のリンクから単一HTMLファイルを、PCやスマホにダウンロード →適当なブラウザで開くのでも使えます！**
+**https://github.com/TweeTeaFOX223/world-dev-info-metasearcher/blob/main/dist-offline/index.html**
+黄色い丸で囲ったボタンを押してください。
+![screenshot2](https://raw.githubusercontent.com/TweeTeaFOX223/world-dev-info-metasearcher/refs/heads/main/ScreenShot2.png)
 
 # 目次
 - [world-dev-info-metasearcher](#world-dev-info-metasearcher)
   - [アプリの概要](#アプリの概要)
-  - [★このアプリを今すぐ使用する！](#このアプリを今すぐ使用する)
+  - [★このアプリを今すぐ使用！](#このアプリを今すぐ使用)
+    - [方法A：GitHub Pagesにアクセス](#方法agithub-pagesにアクセス)
+    - [方法B：HTMLをDLしてブラウザで開く](#方法bhtmlをdlしてブラウザで開く)
 - [目次](#目次)
 - [技術スタック](#技術スタック)
 - [アプリの動作＆改変方法](#アプリの動作改変方法)
@@ -51,7 +54,7 @@ World Dev Info Searcher（WDIF）は、複数の検索エンジンやサイト�
 
 # 技術スタック
 
-「軽量かつ動作楽なアプリをサクッと作る」という基準で選択。
+「軽量かつ動作楽なアプリをサクッと作る」という基準で選定。
   
 | 技術項目                          | 使用しているもの             |
 | --------------------------------- | ---------------------------- |
