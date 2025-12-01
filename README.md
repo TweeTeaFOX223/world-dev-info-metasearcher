@@ -249,7 +249,7 @@ project-root/
 | dev.to           | 英語の開発者コミュニティ。英語以外もある | https://dev.to/search?q={query}                                       |
 | HackerNoon       | 英語の開発者コミュニティ                 | https://hackernoon.com/search?query={query}                           |
 | Stack Overflow   | **日本語の開発者QAコミュニティ**         | https://ja.stackoverflow.com/search?q={query}                         |
-| HackerNews       | 英語のコンピュータコミュニティ           | https://hn.algolia.com/?q={query}                                     |
+| HackerNews       | 英語のハッカーコミュニティ           | https://hn.algolia.com/?q={query}                                     |
 | freeCodeCamp.org | 英語の開発者コミュニティ(投稿は要申請)   | https://www.freecodecamp.org/news/search/?query={query}               |
 | CSDN             | 中国語の開発者コミュニティ               | https://so.csdn.net/so/search?q={query}                               |
 | Juejin (掘金)    | 中国語の開発者コミュニティ               | https://juejin.cn/search?query={query}                                |

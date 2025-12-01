@@ -248,7 +248,7 @@
           "id": "HackerNews",
           "name": "HackerNews",
           "url": "https://hn.algolia.com/?q={query}",
-          "description": "英語のコンピュータコミュニティ"
+          "description": "英語のハッカーコミュニティ"
         },
         {
           "id": "freeCodeCamporg",
