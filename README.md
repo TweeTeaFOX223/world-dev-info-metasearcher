@@ -13,7 +13,7 @@ World Dev Info Searcher（WDIF）は、Claude Codeでサクッと開発した軽
 
 ## ★このアプリを今すぐ使用！
 ### 方法A：GitHub Pagesにアクセス
-このリポジトリのGitHub Pagesにアクセスすると使えます**。初期状態では「Preact 2025」の検索結果のリストを表示します。  
+このリポジトリのGitHub Pagesにアクセスすると使えます。初期状態では「Preact 2025」の検索結果のリストを表示します。  
 
 **https://tweeteafox223.github.io/world-dev-info-metasearcher/?q=Preact+2025**
 
@@ -23,12 +23,21 @@ World Dev Info Searcher（WDIF）は、Claude Codeでサクッと開発した軽
 **https://github.com/TweeTeaFOX223/world-dev-info-metasearcher/blob/main/dist-offline/index.html**
 ![screenshot2](https://raw.githubusercontent.com/TweeTeaFOX223/world-dev-info-metasearcher/refs/heads/main/ScreenShot2.png)
 
+
+## 先駆者様(他のメタ検索エンジン)
+先駆者様のメタ検索エンジンです。AIエージェントによる検索での利用なら**SearXNG**、政治経済情報の調査なら**最速一括検索**を使用するのがオススメです。
+
+- **SearXNG**:https://github.com/searxng/searxng
+- **最速一括検索**：https://skensaku.com/
+- **Ceek jp(サ終済み)**：https://www.ceek.jp/
+
 # 目次
 - [world-dev-info-metasearcher](#world-dev-info-metasearcher)
   - [アプリの概要](#アプリの概要)
   - [★このアプリを今すぐ使用！](#このアプリを今すぐ使用)
     - [方法A：GitHub Pagesにアクセス](#方法agithub-pagesにアクセス)
     - [方法B：HTMLをDLしてブラウザで開く](#方法bhtmlをdlしてブラウザで開く)
+  - [先駆者様(他のメタ検索エンジン)](#先駆者様他のメタ検索エンジン)
 - [目次](#目次)
 - [技術スタック](#技術スタック)
 - [アプリの動作＆改変方法](#アプリの動作改変方法)
