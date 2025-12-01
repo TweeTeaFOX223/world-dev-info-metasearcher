@@ -264,7 +264,7 @@ project-root/
 | ------------------ | -------------------------- | -------------------------------------------- |
 | X(旧Twitter)       | X(Twitter)、要ログイン     | https://x.com/search?q={query}               |
 | はてなブックマーク | はてなのブックマークサイト | https://b.hatena.ne.jp/search/text?q={query} |
-| Reddit             | 英語のフォーラム型SNS      | https://www.reddit.com/search/?q={query}     |
+| Reddit             | 英語中心のフォーラム型SNS      | https://www.reddit.com/search/?q={query}     |
 | BlueSky            | BlueSky、要ログイン        | https://bsky.app/search?q={query}            |
 
 ## GitHub

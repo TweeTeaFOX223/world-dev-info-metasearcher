@@ -308,7 +308,7 @@
           "id": "Reddit",
           "name": "Reddit",
           "url": "https://www.reddit.com/search/?q={query}",
-          "description": "英語のフォーラム型SNS"
+          "description": "英語中心のフォーラム型SNS"
         },
         {
           "id": "BlueSky",
