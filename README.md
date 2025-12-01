@@ -17,9 +17,9 @@ World Dev Info Searcher（WDIF）は、Claude Codeでサクッと開発した軽
 **https://tweeteafox223.github.io/world-dev-info-metasearcher/?q=Preact+2025**
 
 ### 方法B：HTMLをDLしてブラウザで開く
-**方法B：下のリンクから単一HTMLファイルを、PCやスマホにダウンロード →適当なブラウザで開くのでも使えます！**
+下のリンクから単一HTMLファイルを、PCやスマホにダウンロード →適当なブラウザで開くのでも使えます！ 黄色い丸で囲ったボタンを押してください。
+
 **https://github.com/TweeTeaFOX223/world-dev-info-metasearcher/blob/main/dist-offline/index.html**
-黄色い丸で囲ったボタンを押してください。
 ![screenshot2](https://raw.githubusercontent.com/TweeTeaFOX223/world-dev-info-metasearcher/refs/heads/main/ScreenShot2.png)
 
 # 目次
@@ -298,7 +298,7 @@ project-root/
 | Zenn books         | Zennの電子書籍マーケット         | https://zenn.dev/search?q={query}&page=1&source=books   |
 | 技術書典           | 技術書のマーケット               | https://techbookfest.org/market/search?q={query}        |
 | Udemy              | 有料動画販売サイト。開発動画多い | https://www.udemy.com/courses/search/?src=ukw&q={query} |
-| ドットインストール | サブスクの開発学習サイト         | https://dotinstall.com/search?q=query}&f=topbar         |
+| ドットインストール | サブスクの開発学習サイト         | https://dotinstall.com/search?q={query}&f=topbar         |
 | BOOTH              | 創作物の総合マーケット           | https://booth.pm/ja/search/{query}                      |
 | Amazon             | アマゾン                         | https://www.amazon.co.jp/s?k={query}                    |
 | 楽天市場           | 楽天の通販                       | https://search.rakuten.co.jp/search/mall/{query}/       |
