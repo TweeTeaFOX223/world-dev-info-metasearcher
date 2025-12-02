@@ -116,13 +116,13 @@ export function App() {
 
       <footer className="app-footer">
         <p>
-          軽量メタ検索エンジン(単一HTMLファイルで動作可能) |{" "}
+          説明書とコラムとソースコードはこちら |{" "}
           <a
             href="https://github.com/TweeTeaFOX223/world-dev-info-metasearcher"
             target="_blank"
             rel="noopener noreferrer"
           >
-            リポジトリ
+            GitHub
           </a>
         </p>
       </footer>
