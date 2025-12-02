@@ -1,15 +1,13 @@
 # world-dev-info-metasearcher
 ![screenshot](https://raw.githubusercontent.com/TweeTeaFOX223/world-dev-info-metasearcher/refs/heads/main/ScreenShot.png)
-## アプリの概要
-World Dev Info Searcher（WDIF）は、Claude Codeでサクッと開発した軽量メタ検索エンジンです。検索窓に単語を入力してエンターすると、開発技術＋αの情報収集に有用と思われる検索結果のURLのリストを表示します。
+## アプリの概要 
+World Dev Info Searcher（WDIF）は、Claude Codeでサクッと開発した軽量メタ検索エンジンです。検索窓に単語を入力してエンターすると、開発技術＋αの情報収集に有用と思われる検索結果のURLのリストを表示します。  
   
 - URLに「選択中のタブ」と「検索中のワード」の情報がパラメータとして入ります。ページをブラウザブックマークすることで、素早く現在の検索結果にジャンプすることが可能です。
 - `./src/data/searchEngines.json`を書き換えた後にビルドすることで、使用する検索エンジンをカスタムすることが可能です。
 - サーバー不要でローカルのブラウザから直接開く(fileプロトコルで開く)だけで動作する、単一HTMLファイルにビルドすることが可能です。→`npm run build-offline`。LINEやDiscordやメールでHTMLファイルを送るだけでアプリの共有が可能です。
 - アプリ(HTMLファイル)のサイズは50KB程度で非常に小さいです（Preactをフレームワークに採用しているため）。
 - 検索結果URLを生成する処理はクライアント上(ブラウザ内)で行われます。単一HTMLファイルを開いて使用する場合だとプライバシー的に安全です。※GitHub PagesのやつだとGitHub側に検索クエリが記録される可能性があるので一応注意です。
-
-
 
 ## ★このアプリを今すぐ使用！
 ### 方法A：GitHub Pagesにアクセス
@@ -24,10 +22,17 @@ World Dev Info Searcher（WDIF）は、Claude Codeでサクッと開発した軽
 ![screenshot2](https://raw.githubusercontent.com/TweeTeaFOX223/world-dev-info-metasearcher/refs/heads/main/ScreenShot2.png)
 
 
-## 先駆者様(他のメタ検索エンジン)
-先駆者様のメタ検索エンジンです。
+## 開発背景と思想
+「特定のトピックに関するZennやQiitaやDev.toやGitHubやCSDNやMediumやnoteやXやReddit等の新着投稿を手動検索で全部確認したいが…、毎回毎回各サービスの検索窓に単語を入力する作業が面倒臭すぎる。ブラウザの検索エンジン追加機能は一回ずつ選択する形式なのでUI的に微妙。」→「一回単語入力するだけで各種の技術情報サイトの検索結果URLを一括で表示する、開発情報特化のメタ検索エンジンを作ったら便利なのでは？」と思ったので、Claude Codeに要件定義を入れてサクッと作ってみました。
 
-最近流行りのAIエージェントによる検索での利用なら**SearXNG**(Perplexityも使ってるらしい)、国内外の政治経済情報の調査ならありとあらゆる分野をカバー可能な**最速一括検索**を使用するのがオススメです。
+作ってる最中に「開発情報収集以外でも使えそう」と思ったので、世界各国言語特化の検索エンジンや百科事典やブログや動画サイトもザッと入れてみました。
+
+※手動検索による新着投稿の全確認：生成AIによる自動検索・身内チャット情報網・X(旧Twitter)やYouTubeやTechFeed等のフォローTLとレコメンド(おすすめ)で回ってくる範囲ではカバーできない、面白かったり有用だったりする情報を発見できることがあるので、開発に限らずあらゆる分野で非常に重要な行為なのではないかと思っています。
+
+## 先駆者様(他のメタ検索エンジン)
+先駆者様のメタ検索エンジンです。私のやつとは違った特徴があります。
+
+複数の検索エンジンの検索結果を統合して表示するタイプが良い or 最近流行りの生成AIエージェントを用いた検索利用なら**SearXNG**(Perplexityも使ってるらしい)、国内外の政治経済情報の調査ならありとあらゆる分野をカバー可能な**最速一括検索**を使用するのがオススメです。
 
 - **SearXNG**:https://github.com/searxng/searxng
 - **最速一括検索**：https://skensaku.com/
@@ -38,6 +43,7 @@ World Dev Info Searcher（WDIF）は、Claude Codeでサクッと開発した軽
   - [★このアプリを今すぐ使用！](#このアプリを今すぐ使用)
     - [方法A：GitHub Pagesにアクセス](#方法agithub-pagesにアクセス)
     - [方法B：HTMLをDLしてブラウザで開く](#方法bhtmlをdlしてブラウザで開く)
+  - [開発背景と思想](#開発背景と思想)
   - [先駆者様(他のメタ検索エンジン)](#先駆者様他のメタ検索エンジン)
 - [目次](#目次)
 - [技術スタック](#技術スタック)
@@ -171,6 +177,8 @@ npm run build-offline
 
 ```
 project-root/
+├── scripts/
+│   └── generateMarkdownTable.ts # 検索エンジン設定をMDの表に変換
 ├── src/
 │   ├── components/       # Preactコンポーネント
 │   │   ├── TabBar.tsx
