@@ -54,8 +54,8 @@ World Dev Info Searcher（WDIF）は、Claude Codeでサクッと開発した軽
 - [コラム](#コラム)
 - [検索エンジン設定に入れたサイトの一覧](#検索エンジン設定に入れたサイトの一覧)
   - [各国検索](#各国検索)
-  - [一般サイト](#一般サイト)
-  - [開発技術（修正版）](#開発技術修正版)
+  - [一般情報](#一般情報)
+  - [開発技術](#開発技術)
   - [SNS関連](#sns関連)
   - [GitHub](#github)
   - [動画関係](#動画関係)
@@ -211,6 +211,8 @@ project-root/
 
 # 検索エンジン設定に入れたサイトの一覧
 
+`npm run generate-table`で`scripts/generateMarkdownTable.ts`を実行するとmdテーブルを`search-engines-table.md`に生成します。
+
 ## 各国検索
 
 | サイト名        | 説明                                     | URL                                                                        |
@@ -237,7 +239,7 @@ project-root/
 | Walla!          | イスラエルの検索エンジン                 | https://search.walla.co.il/?q={query}                                      |
 | search.ch       | スイスの検索エンジン                     | https://search.ch/tel/?all={query}                                         |
 
-## 一般サイト
+## 一般情報
 
 | サイト名            | 説明                                           | URL                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | ------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -253,24 +255,27 @@ project-root/
 | Namu Wiki           | 韓国語の百科事典サイト                         | https://namu.wiki/Search?q={query}                                                                                                                                                                                                                                                                                                                                                                                                                |
 | Baidu百科(百度百科) | 中国語の百科事典サイト                         | https://baike.baidu.com/search?word={query}                                                                                                                                                                                                                                                                                                                                                                                                       |
 | Grokipedia          | Xの生成AI(Grok)により記事生成するwiki          | https://grokipedia.com/search?q={query}                                                                                                                                                                                                                                                                                                                                                                                                           |
+| Google Scholar      | グーグルの論文検索エンジン                     | https://scholar.google.com/scholar?hl=ja&as_sdt=0%2C5&q={query}&btnG=                                                                                                                                                                                                                                                                                                                                                                             |
+| CiNii Research      | 日本語の論文検索エンジン                       | https://cir.nii.ac.jp/all?q={query}                                                                                                                                                                                                                                                                                                                                                                                                               |
 
-## 開発技術（修正版）
+## 開発技術
 
-| サイト名         | 説明                                     | URL                                                                   |
-| ---------------- | ---------------------------------------- | --------------------------------------------------------------------- |
-| Zenn             | 日本語の開発情報共有コミュニティ         | https://zenn.dev/search?q={query}                                     |
-| Qiita            | 日本語の開発情報共有コミュニティ         | https://qiita.com/search?q={query}                                    |
-| dev.to           | 英語の開発者コミュニティ。英語以外もある | https://dev.to/search?q={query}                                       |
-| HackerNoon       | 英語の開発者コミュニティ                 | https://hackernoon.com/search?query={query}                           |
-| Stack Overflow   | **日本語の開発者QAコミュニティ**         | https://ja.stackoverflow.com/search?q={query}                         |
-| HackerNews       | 英語のハッカーコミュニティ           | https://hn.algolia.com/?q={query}                                     |
-| freeCodeCamp.org | 英語の開発者コミュニティ(投稿は要申請)   | https://www.freecodecamp.org/news/search/?query={query}               |
-| CSDN             | 中国語の開発者コミュニティ               | https://so.csdn.net/so/search?q={query}                               |
-| Juejin (掘金)    | 中国語の開発者コミュニティ               | https://juejin.cn/search?query={query}                                |
-| Velog            | 韓国語の開発者コミュニティ               | https://velog.io/search?q={query}                                     |
-| Teratail         | 日本語の開発者QAコミュニティ             | https://teratail.com/search?q={query}                                 |
-| Google Scholar   | グーグルの論文検索エンジン               | https://scholar.google.com/scholar?hl=ja&as_sdt=0%2C5&q={query}&btnG= |
-
+| サイト名         | 説明                                     | URL                                                                                            |
+| ---------------- | ---------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Zenn             | 日本語の開発情報共有コミュニティ         | https://zenn.dev/search?q={query}                                                              |
+| Qiita            | 日本語の開発情報共有コミュニティ         | https://qiita.com/search?q={query}                                                             |
+| dev.to           | 英語の開発者コミュニティ。英語以外もある | https://dev.to/search?q={query}                                                                |
+| HackerNoon       | 英語の開発者コミュニティ                 | https://hackernoon.com/search?query={query}                                                    |
+| Stack Overflow   | 日本語の開発者QAコミュニティ             | https://ja.stackoverflow.com/search?q={query}                                                  |
+| HackerNews       | 英語のハッカーコミュニティ               | https://hn.algolia.com/?q={query}                                                              |
+| freeCodeCamp.org | 英語の開発者コミュニティ(投稿は要申請)   | https://www.freecodecamp.org/news/search/?query={query}                                        |
+| ドクセル         | 日本語のスライド共有サービス             | https://www.docswell.com/search?q={query}                                                      |
+| Slideshare       | アメリカのスライド共有サービス           | https://www.slideshare.net/search?searchFrom=header&q={query}                                  |
+| Speaker Deck     | アメリカのスライド共有サービス           | https://cse.google.com/cse?cx=010150859881542981030%3Ahqhxyxpwtc4&ie=UTF-8&q={query}&sa=Search |
+| CSDN             | 中国語の開発者コミュニティ               | https://so.csdn.net/so/search?q={query}                                                        |
+| Juejin (掘金)    | 中国語の開発者コミュニティ               | https://juejin.cn/search?query={query}                                                         |
+| Velog            | 韓国語の開発者コミュニティ               | https://velog.io/search?q={query}                                                              |
+| Teratail         | 日本語の開発者QAコミュニティ             | https://teratail.com/search?q={query}                                                          |
 
 ## SNS関連
 
@@ -278,7 +283,7 @@ project-root/
 | ------------------ | -------------------------- | -------------------------------------------- |
 | X(旧Twitter)       | X(Twitter)、要ログイン     | https://x.com/search?q={query}               |
 | はてなブックマーク | はてなのブックマークサイト | https://b.hatena.ne.jp/search/text?q={query} |
-| Reddit             | 英語中心のフォーラム型SNS      | https://www.reddit.com/search/?q={query}     |
+| Reddit             | 英語中心のフォーラム型SNS  | https://www.reddit.com/search/?q={query}     |
 | BlueSky            | BlueSky、要ログイン        | https://bsky.app/search?q={query}            |
 
 ## GitHub
@@ -309,9 +314,10 @@ project-root/
 | Zenn books         | Zennの電子書籍マーケット         | https://zenn.dev/search?q={query}&page=1&source=books   |
 | 技術書典           | 技術書のマーケット               | https://techbookfest.org/market/search?q={query}        |
 | Udemy              | 有料動画販売サイト。開発動画多い | https://www.udemy.com/courses/search/?src=ukw&q={query} |
-| ドットインストール | サブスクの開発学習サイト         | https://dotinstall.com/search?q={query}&f=topbar         |
+| ドットインストール | サブスクの開発学習サイト         | https://dotinstall.com/search?q={query}&f=topbar        |
 | BOOTH              | 創作物の総合マーケット           | https://booth.pm/ja/search/{query}                      |
 | Amazon             | アマゾン                         | https://www.amazon.co.jp/s?k={query}                    |
 | 楽天市場           | 楽天の通販                       | https://search.rakuten.co.jp/search/mall/{query}/       |
 | Yahoo!ショッピング | Yahoo! ショッピング              | https://shopping.yahoo.co.jp/search?p={query}           |
+
 

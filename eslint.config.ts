@@ -19,6 +19,15 @@ export default tseslint.config(
       },
     },
   },
+  // Node.js環境用の設定（generateMarkdownTable.ts など）
+  {
+    files: ["**/utils/generateMarkdownTable.ts", "vite.config.ts"],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
