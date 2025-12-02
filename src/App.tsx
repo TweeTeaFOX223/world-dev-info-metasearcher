@@ -18,15 +18,33 @@ function getQueryFromUrl(): string {
 }
 
 /**
+ * URLパラメータからタブIDを取得
+ */
+function getTabIdFromUrl(): string {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("tab") || "";
+}
+
+/**
  * URLパラメータを更新
  */
-function updateUrlParameter(query: string) {
+function updateUrlParameter(query: string, tabId: string) {
   const url = new URL(window.location.href);
+
+  // タブIDを設定
+  if (tabId) {
+    url.searchParams.set("tab", tabId);
+  } else {
+    url.searchParams.delete("tab");
+  }
+
+  // 検索クエリを設定
   if (query) {
     url.searchParams.set("q", query);
   } else {
     url.searchParams.delete("q");
   }
+
   window.history.replaceState({}, "", url.toString());
 }
 
@@ -34,11 +52,18 @@ export function App() {
   const [activeTabId, setActiveTabId] = useState(config.tabs[0]?.id || "");
   const [searchQuery, setSearchQuery] = useState("");
 
-  // 初回マウント時にURLパラメータから検索クエリを読み取る
+  // 初回マウント時にURLパラメータから検索クエリとタブIDを読み取る
   useEffect(() => {
     const urlQuery = getQueryFromUrl();
+    const urlTabId = getTabIdFromUrl();
+
     if (urlQuery) {
       setSearchQuery(urlQuery);
+    }
+
+    // URLにタブIDがあり、それが有効な場合は設定
+    if (urlTabId && config.tabs.some((tab) => tab.id === urlTabId)) {
+      setActiveTabId(urlTabId);
     }
   }, []);
 
@@ -51,11 +76,15 @@ export function App() {
     }
   }, [searchQuery]);
 
+  // タブIDまたは検索クエリが変更されたらURLを更新
+  useEffect(() => {
+    updateUrlParameter(searchQuery, activeTabId);
+  }, [searchQuery, activeTabId]);
+
   const activeTab = getTabById(config, activeTabId);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
-    updateUrlParameter(query); // URLパラメータを更新
   };
 
   const handleTabChange = (tabId: string) => {

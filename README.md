@@ -2,8 +2,8 @@
 ![screenshot](https://raw.githubusercontent.com/TweeTeaFOX223/world-dev-info-metasearcher/refs/heads/main/ScreenShot.png)
 ## アプリの概要
 World Dev Info Searcher（WDIF）は、Claude Codeでサクッと開発した軽量メタ検索エンジンです。検索窓に単語を入力してエンターすると、開発技術＋αの情報収集に有用と思われる検索結果のURLのリストを表示します。
-
-
+  
+- URLに「選択中のタブ」と「検索中のワード」の情報がパラメータとして入ります。ページをブラウザブックマークすることで、素早く現在の検索結果にジャンプすることが可能です。
 - `./src/data/searchEngines.json`を書き換えた後にビルドすることで、使用する検索エンジンをカスタムすることが可能です。
 - サーバー不要でローカルのブラウザから直接開く(fileプロトコルで開く)だけで動作する、単一HTMLファイルにビルドすることが可能です。→`npm run build-offline`。LINEやDiscordやメールでHTMLファイルを送るだけでアプリの共有が可能です。
 - アプリ(HTMLファイル)のサイズは50KB程度で非常に小さいです（Preactをフレームワークに採用しているため）。
@@ -25,11 +25,12 @@ World Dev Info Searcher（WDIF）は、Claude Codeでサクッと開発した軽
 
 
 ## 先駆者様(他のメタ検索エンジン)
-先駆者様のメタ検索エンジンです。AIエージェントによる検索での利用なら**SearXNG**、政治経済情報の調査なら**最速一括検索**を使用するのがオススメです。
+先駆者様のメタ検索エンジンです。
+
+最近流行りのAIエージェントによる検索での利用なら**SearXNG**(Perplexityも使ってるらしい)、国内外の政治経済情報の調査ならありとあらゆる分野をカバー可能な**最速一括検索**を使用するのがオススメです。
 
 - **SearXNG**:https://github.com/searxng/searxng
 - **最速一括検索**：https://skensaku.com/
-- **Ceek jp(サ終済み)**：https://www.ceek.jp/
 
 # 目次
 - [world-dev-info-metasearcher](#world-dev-info-metasearcher)
