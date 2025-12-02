@@ -134,7 +134,7 @@
     },
     {
       "id": "general-blog",
-      "name": "一般サイト",
+      "name": "一般情報",
       "engines": [
         {
           "id": "wikipediaJa",
@@ -207,6 +207,18 @@
           "name": "Grokipedia",
           "url": "https://grokipedia.com/search?q={query}",
           "description": "Xの生成AI(Grok)により記事生成するwiki"
+        },
+        {
+          "id": "Google Scholar",
+          "name": "Google Scholar",
+          "url": "https://scholar.google.com/scholar?hl=ja&as_sdt=0%2C5&q={query}&btnG=",
+          "description": "グーグルの論文検索エンジン"
+        },
+        {
+          "id": "CiNii Research",
+          "name": "CiNii Research",
+          "url": "https://cir.nii.ac.jp/all?q={query}",
+          "description": "日本語の論文検索エンジン"
         }
       ]
     },
@@ -257,6 +269,24 @@
           "description": "英語の開発者コミュニティ(投稿は要申請)"
         },
         {
+          "id": "ドクセル",
+          "name": "ドクセル",
+          "url": "https://www.docswell.com/search?q={query}",
+          "description": "日本語のスライド共有サービス"
+        },
+        {
+          "id": "Slideshare",
+          "name": "Slideshare",
+          "url": "https://www.slideshare.net/search?searchFrom=header&q={query}",
+          "description": "アメリカのスライド共有サービス"
+        },
+        {
+          "id": "Speaker Deck",
+          "name": "Speaker Deck",
+          "url": "https://cse.google.com/cse?cx=010150859881542981030%3Ahqhxyxpwtc4&ie=UTF-8&q={query}&sa=Search",
+          "description": "アメリカのスライド共有サービス"
+        },
+        {
           "id": "CSDN",
           "name": "CSDN",
           "url": "https://so.csdn.net/so/search?q={query}",
@@ -279,12 +309,6 @@
           "name": "Teratail",
           "url": "https://teratail.com/search?q={query}",
           "description": "日本語の開発者QAコミュニティ"
-        },
-        {
-          "id": "Google Scholar",
-          "name": "Google Scholar",
-          "url": "https://scholar.google.com/scholar?hl=ja&as_sdt=0%2C5&q={query}&btnG=",
-          "description": "グーグルの論文検索エンジン"
         }
       ]
     },
