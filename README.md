@@ -11,7 +11,7 @@ World Dev Info Searcher（WDIF）は、Claude Codeでサクッと開発した軽
 
 ## ★このアプリを今すぐ使用！
 ### 方法A：GitHub Pagesにアクセス
-このリポジトリのGitHub Pagesにアクセスすると使えます。初期状態では技術関連タブの「Preact 2025」の検索結果のリストを表示します。  
+このリポジトリのGitHub Pagesにアクセスすると使えます。初期状態では技術関連タブの「Preact」の検索結果のリストを表示します。  
 
 **https://tweeteafox223.github.io/world-dev-info-metasearcher/?tab=tech-blogs&q=Preact**
 
