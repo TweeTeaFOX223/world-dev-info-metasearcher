@@ -7,7 +7,7 @@
     "dev": "vite",
     "generate-table": "tsx scripts/generateMarkdownTable.ts",
     "build": "tsc -b && vite build",
-    "build-offline": "tsc -b && vite build --config vite.config.offline.js",
+    "build-offline": "tsc -b && vite build --config vite.config.offline.js && npm run generate-table",
     "preview": "vite preview"
   },
   "dependencies": {
