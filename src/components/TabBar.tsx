@@ -1,26 +1,129 @@
-import type { TabConfig } from '../types';
+import { useState } from "preact/hooks";
+import type { TabConfig } from "../types";
 
 interface TabBarProps {
   tabs: TabConfig[];
   activeTabId: string;
+  editMode?: boolean;
   onTabChange: (tabId: string) => void;
+  onTabReorder?: (fromIndex: number, toIndex: number) => void;
+  onTabDelete?: (tabId: string) => void;
+  onAddTab?: (position: number) => void;
 }
 
-export function TabBar({ tabs, activeTabId, onTabChange }: TabBarProps) {
+export function TabBar({
+  tabs,
+  activeTabId,
+  editMode = false,
+  onTabChange,
+  onTabReorder,
+  onTabDelete,
+  onAddTab,
+}: TabBarProps) {
+  const [draggedTabIndex, setDraggedTabIndex] = useState<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+
+  const handleDragStart = (e: DragEvent, index: number) => {
+    e.dataTransfer!.effectAllowed = "move";
+    setDraggedTabIndex(index);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedTabIndex(null);
+    setDragOverIndex(null);
+  };
+
+  const handleDragOver = (e: DragEvent, index: number) => {
+    e.preventDefault();
+    if (draggedTabIndex !== null && draggedTabIndex !== index) {
+      setDragOverIndex(index);
+    }
+  };
+
+  const handleDrop = (e: DragEvent, index: number) => {
+    e.preventDefault();
+    if (draggedTabIndex !== null && draggedTabIndex !== index && onTabReorder) {
+      onTabReorder(draggedTabIndex, index);
+    }
+    setDraggedTabIndex(null);
+    setDragOverIndex(null);
+  };
+
+  const handleDeleteClick = (e: Event, tabId: string) => {
+    e.stopPropagation();
+    if (onTabDelete) {
+      onTabDelete(tabId);
+    }
+  };
+
+  // ドラッグ中の表示用に並び替えた配列を作成
+  const displayTabs = [...tabs];
+  if (draggedTabIndex !== null && dragOverIndex !== null) {
+    const [draggedTab] = displayTabs.splice(draggedTabIndex, 1);
+    displayTabs.splice(dragOverIndex, 0, draggedTab);
+  }
+
   return (
-    <div className="tab-bar" role="tablist" aria-label="検索カテゴリ">
-      {tabs.map((tab) => (
-        <button
-          key={tab.id}
-          onClick={() => onTabChange(tab.id)}
-          className={`tab-button ${activeTabId === tab.id ? 'active' : ''}`}
-          role="tab"
-          aria-selected={activeTabId === tab.id}
-          aria-controls={`tabpanel-${tab.id}`}
-        >
-          {tab.name}
-        </button>
-      ))}
+    <div className="tab-bar-container">
+      <div className="tab-bar" role="tablist" aria-label="検索カテゴリ">
+        {displayTabs.map((tab, displayIndex) => {
+          const originalIndex = tabs.findIndex((t) => t.id === tab.id);
+          const isDragging = draggedTabIndex === originalIndex;
+
+          return (
+            <>
+              {editMode && onAddTab && (
+                <button
+                  className="add-tab-btn"
+                  onClick={() => onAddTab(displayIndex)}
+                  aria-label="この位置にタブを追加"
+                >
+                  +
+                </button>
+              )}
+              <button
+                key={tab.id}
+                onClick={() => onTabChange(tab.id)}
+                className={`tab-button ${
+                  activeTabId === tab.id ? "active" : ""
+                } ${isDragging ? "dragging" : ""} ${
+                  editMode ? "edit-mode" : ""
+                }`}
+                role="tab"
+                aria-selected={activeTabId === tab.id}
+                aria-controls={`tabpanel-${tab.id}`}
+                draggable={editMode}
+                onDragStart={(e) =>
+                  editMode && handleDragStart(e, originalIndex)
+                }
+                onDragEnd={handleDragEnd}
+                onDragOver={(e) => editMode && handleDragOver(e, displayIndex)}
+                onDrop={(e) => editMode && handleDrop(e, displayIndex)}
+              >
+                {editMode && onTabDelete && tabs.length > 1 && (
+                  <span
+                    className="tab-delete-btn"
+                    onClick={(e) => handleDeleteClick(e, tab.id)}
+                    aria-label="削除"
+                  >
+                    ×
+                  </span>
+                )}
+                {tab.name}
+              </button>
+            </>
+          );
+        })}
+        {editMode && onAddTab && (
+          <button
+            className="add-tab-btn"
+            onClick={() => onAddTab(tabs.length)}
+            aria-label="最後にタブを追加"
+          >
+            +
+          </button>
+        )}
+      </div>
     </div>
   );
 }
