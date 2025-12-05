@@ -15,7 +15,9 @@ World Dev Info Searcher（WDIF）は、Claude Codeでサクッと開発した軽
 - サーバー不要でローカルのブラウザから直接開く(fileプロトコルで開く)だけで動作する、単一HTMLファイルにビルドすることが可能です。→`npm run build-offline`。LINEやDiscordやメールでHTMLファイルを送るだけでアプリの共有が可能です。 
 - アプリ(HTMLファイル)のサイズは50KB程度で非常に小さいです（Preactをフレームワークに採用しているため）。  
 - 検索結果URLを生成する処理はクライアント上(ブラウザ内)で行われます。単一HTMLファイルを開いて使用する場合だとプライバシー的に安全です。※GitHub PagesのやつだとGitHub側に検索クエリが記録される可能性があるので一応注意です。  
-
+  
+<br>
+  
 ## ★このアプリを今すぐ使用！
 ### 方法A：GitHub Pagesにアクセス
 このリポジトリのGitHub Pagesにアクセスすると使えます。初期状態では技術関連タブの「Preact」の検索結果のリストを表示します。  
@@ -25,8 +27,9 @@ World Dev Info Searcher（WDIF）は、Claude Codeでサクッと開発した軽
 💣️注意：設定は[ブラウザの内部データ(ローカルストレージ)](https://zenn.dev/crebo_tech/articles/article-0019-20251103#%E3%82%B7%E3%83%BC%E3%82%AF%E3%83%AC%E3%83%83%E3%83%88%E3%83%A2%E3%83%BC%E3%83%89%EF%BC%88%E3%83%97%E3%83%A9%E3%82%A4%E3%83%99%E3%83%BC%E3%83%88%E3%83%A2%E3%83%BC%E3%83%89%EF%BC%89%E3%81%AE%E6%8C%99%E5%8B%95)に保存されます。**「シークレットモード使用時にアクセスし編集を行った後にブラウザを閉じる」「ブラウザの設定から手動でこのページのサイトデータを消去する」という操作をすると、設定が消えてしまう**ので気をつけてください！  
   
 💣️注意：編集や設定変更した時の設定は、「Webページを開いた[ブラウザアプリの内部データ(ローカルストレージ)](https://zenn.dev/crebo_tech/articles/article-0019-20251103#%E3%82%B7%E3%83%BC%E3%82%AF%E3%83%AC%E3%83%83%E3%83%88%E3%83%A2%E3%83%BC%E3%83%89%EF%BC%88%E3%83%97%E3%83%A9%E3%82%A4%E3%83%99%E3%83%BC%E3%83%88%E3%83%A2%E3%83%BC%E3%83%89%EF%BC%89%E3%81%AE%E6%8C%99%E5%8B%95)」に保存されます！**別々のブラウザでHTMLを開くと、設定はそれぞれに別になるので気をつけてください！**  
-
-
+  
+<br>
+  
 ### 方法B：HTMLをDLしてブラウザで開く
 下のリンクから単一HTMLファイルを、PCやスマホにダウンロード →適当なブラウザで開くのでも使えます！ 黄色い丸で囲ったボタンを押してください。  
   
@@ -37,7 +40,9 @@ World Dev Info Searcher（WDIF）は、Claude Codeでサクッと開発した軽
 💣️注意：方法Aと同じことに注意が必要です。→ **「シークレットモード使わない」「設定は開いたブラウザに保存」「ブラウザ設定からサイトデータ消さない」**
   
 💣️注意：ローカルHTMLを開いて使用する場合、**ブラウザの内部データ(ローカルストレージ)は、「HTMLのファイル位置(パス)」に紐付けられます。一度使用した後にHTMLファイルの場所を移動させると、設定が別扱いになってしまうので気をつけてください！**
-
+  
+<br>
+  
 ## 開発の背景と思想
 以前から「特定のトピックに関するZennやQiitaやDev.toやGitHubやCSDNやMediumやnoteやXやReddit等の新着投稿を手動検索で全部確認したいが…、毎回毎回各サービスの検索窓に単語を入力する作業が面倒臭すぎる。ブラウザの検索エンジン追加機能は一回ずつ選択する形式なのでUI的に微妙だな。」と感じていました。  
   
@@ -54,7 +59,9 @@ World Dev Info Searcher（WDIF）は、Claude Codeでサクッと開発した軽
 
 - **SearXNG**:https://github.com/searxng/searxng
 - **最速一括検索**：https://skensaku.com/
-
+  
+<br>
+  
 # 目次
 - [world-dev-info-metasearcher](#world-dev-info-metasearcher)
   - [アプリの概要](#アプリの概要)
@@ -185,7 +192,9 @@ npm run build-offline
 
 # dist-offline/index.html が生成される
 ```
-
+  
+<br>
+  
 # プロジェクトのファイル構成
 
 ```
@@ -244,7 +253,8 @@ project-root/
 └── vite.config.offline.ts        # 単一HTMLビルド用のVite設定
 
 ```
-
+  
+<br>
   
 # 検索エンジン初期設定に入れたサイトの一覧
 
@@ -263,6 +273,8 @@ https://github.com/TweeTeaFOX223/world-dev-info-metasearcher/blob/main/src/data/
 ↓このリンクを踏むと見れます。↓  
 https://github.com/TweeTeaFOX223/world-dev-info-metasearcher/blob/main/search-engines-table.md  
 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+  
+<br>
   
 # GitHub Pages(GitHub Actionsの設定)
 `npm run build-offline`を実行して単一HTMLをビルドしてプッシュした時に、GitHub Pagesにビルド＆デプロイするようになっています。   
