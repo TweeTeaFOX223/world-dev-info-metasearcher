@@ -344,7 +344,7 @@ export function Settings({
                 )}
                 <p className="settings-note">
                   {settings.cardsPerRowMode === "fixed"
-                    ? "※スマホ表示時は一行1個になります"
+                    ? "※カード情報表示や文字サイズも合わせて調節しないとUI崩れるので注意です"
                     : "※画面幅に応じて自動的にカード数が調整されます"}
                 </p>
               </div>
