@@ -57,6 +57,13 @@ export function Settings({
     });
   };
 
+  const handleCardsPerRowModeChange = (mode: "fixed" | "auto") => {
+    onSettingsChange({
+      ...settings,
+      cardsPerRowMode: mode,
+    });
+  };
+
   const handleMinCardsChange = (e: Event) => {
     const target = e.target as HTMLInputElement;
     const newMin = parseInt(target.value);
@@ -87,14 +94,6 @@ export function Settings({
     onSettingsChange({
       ...settings,
       showUrl: target.checked,
-    });
-  };
-
-  const handleApplyMinCardsOnMobileChange = (e: Event) => {
-    const target = e.target as HTMLInputElement;
-    onSettingsChange({
-      ...settings,
-      applyMinCardsOnMobile: target.checked,
     });
   };
 
@@ -304,34 +303,50 @@ export function Settings({
               <div className="settings-section">
                 <h3>一行のカード数（最小）</h3>
                 <div className="settings-item">
-                  <label>
-                    <input
-                      type="range"
-                      min="1"
-                      max="12"
-                      step="1"
-                      value={settings.minCardsPerRow}
-                      onInput={handleMinCardsChange}
-                      className="settings-slider"
-                    />
-                    <span className="settings-value">
-                      {settings.minCardsPerRow}枚
-                    </span>
-                  </label>
+                  <div className="radio-group">
+                    <label className="radio-label">
+                      <input
+                        type="radio"
+                        name="cardsPerRowMode"
+                        checked={settings.cardsPerRowMode === "auto"}
+                        onChange={() => handleCardsPerRowModeChange("auto")}
+                      />
+                      <span>数をオート可変</span>
+                    </label>
+                    <label className="radio-label">
+                      <input
+                        type="radio"
+                        name="cardsPerRowMode"
+                        checked={settings.cardsPerRowMode === "fixed"}
+                        onChange={() => handleCardsPerRowModeChange("fixed")}
+                      />
+                      <span>固定</span>
+                    </label>
+                  </div>
                 </div>
+                {settings.cardsPerRowMode === "fixed" && (
+                  <div className="settings-item">
+                    <label>
+                      <input
+                        type="range"
+                        min="1"
+                        max="12"
+                        step="1"
+                        value={settings.minCardsPerRow}
+                        onInput={handleMinCardsChange}
+                        className="settings-slider"
+                      />
+                      <span className="settings-value">
+                        {settings.minCardsPerRow}枚
+                      </span>
+                    </label>
+                  </div>
+                )}
                 <p className="settings-note">
-                  ※スマホ表示時は一行1個になります
+                  {settings.cardsPerRowMode === "fixed"
+                    ? "※スマホ表示時は一行1個になります"
+                    : "※画面幅に応じて自動的にカード数が調整されます"}
                 </p>
-                <div className="settings-item">
-                  <label className="settings-checkbox">
-                    <input
-                      type="checkbox"
-                      checked={settings.applyMinCardsOnMobile}
-                      onChange={handleApplyMinCardsOnMobileChange}
-                    />
-                    <span>スマホ表示時にも、最小カード数の設定を適用する</span>
-                  </label>
-                </div>
               </div>
 
               {/* カードの情報表示 */}
@@ -368,7 +383,7 @@ export function Settings({
               {/* リセットボタン */}
               <div className="settings-reset">
                 <button className="reset-btn" onClick={handleResetClick}>
-                  表示設定をリセット
+                  設定をリセット
                 </button>
               </div>
             </>

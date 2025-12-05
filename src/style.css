@@ -214,13 +214,65 @@ body {
   margin-top: 2rem;
 }
 
-.search-results-grid {
+/* 固定モード: ユーザーが指定した最小カード数を使用 */
+html[data-cards-mode="fixed"] .search-results-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill,
       minmax(calc(100% / var(--min-cards-per-row) - 1rem),
         1fr));
   gap: 1rem;
   align-items: stretch;
+}
+
+/* オート可変モード: 画面幅に応じて自動調整 */
+html[data-cards-mode="auto"] .search-results-grid {
+  display: grid;
+  gap: 1rem;
+  align-items: stretch;
+  /* デフォルト: 非常に大きい画面 (1920px以上) - 8枚 */
+  grid-template-columns: repeat(8, 1fr);
+}
+
+/* 1920px未満 - 6枚 */
+@media (max-width: 1919px) {
+  html[data-cards-mode="auto"] .search-results-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* 1440px未満 - 5枚 */
+@media (max-width: 1439px) {
+  html[data-cards-mode="auto"] .search-results-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* 1200px未満 - 4枚 */
+@media (max-width: 1199px) {
+  html[data-cards-mode="auto"] .search-results-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* 992px未満 - 3枚 */
+@media (max-width: 991px) {
+  html[data-cards-mode="auto"] .search-results-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 768px未満 (タブレット) - 2枚 */
+@media (max-width: 767px) {
+  html[data-cards-mode="auto"] .search-results-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 480px未満 (スマホ) - 1枚 */
+@media (max-width: 479px) {
+  html[data-cards-mode="auto"] .search-results-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Search Engine Card */
@@ -421,10 +473,6 @@ body {
   .search-input,
   .search-button {
     width: 100%;
-  }
-
-  html:not([data-mobile-cards="custom"]) .search-results-grid {
-    grid-template-columns: 1fr !important;
   }
 }
 
@@ -846,6 +894,30 @@ body {
 .settings-checkbox span {
   font-size: calc(0.875rem * var(--font-scale));
   color: var(--text-primary);
+}
+
+.radio-group {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: calc(0.875rem * var(--font-scale));
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.radio-label input[type="radio"] {
+  width: 1.125rem;
+  height: 1.125rem;
+  cursor: pointer;
+  accent-color: var(--primary-color);
 }
 
 .settings-reset {

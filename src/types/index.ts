@@ -20,11 +20,11 @@ export interface AppSettings {
   theme: "light" | "dark";
   cardScale: number;
   fontSize: number;
+  cardsPerRowMode: "fixed" | "auto";
   minCardsPerRow: number;
   showName: boolean;
   showDescription: boolean;
   showUrl: boolean;
-  applyMinCardsOnMobile: boolean;
 }
 
 export interface DragItem {

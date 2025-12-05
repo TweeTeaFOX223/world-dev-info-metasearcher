@@ -24,11 +24,11 @@ const defaultSettings: AppSettings = {
   theme: "light",
   cardScale: 1.0,
   fontSize: 1.0,
+  cardsPerRowMode: "auto",
   minCardsPerRow: 4,
   showName: true,
   showDescription: true,
   showUrl: true,
-  applyMinCardsOnMobile: false,
 };
 
 /**
@@ -159,14 +159,13 @@ export function App() {
     );
   }, [settings.minCardsPerRow]);
 
-  // モバイルでのカード数設定適用を制御
+  // カード数モード（固定/オート）を制御
   useEffect(() => {
-    if (settings.applyMinCardsOnMobile) {
-      document.documentElement.setAttribute("data-mobile-cards", "custom");
-    } else {
-      document.documentElement.removeAttribute("data-mobile-cards");
-    }
-  }, [settings.applyMinCardsOnMobile]);
+    document.documentElement.setAttribute(
+      "data-cards-mode",
+      settings.cardsPerRowMode
+    );
+  }, [settings.cardsPerRowMode]);
 
   const activeTab = getTabById(config, activeTabId);
 
