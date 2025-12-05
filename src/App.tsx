@@ -10,6 +10,12 @@ import { AddEngineModal } from "./components/AddEngineModal";
 import { AddTabModal } from "./components/AddTabModal";
 import { DeleteTabModal } from "./components/DeleteTabModal";
 import { getTabById } from "./utils/searchUtils";
+import {
+  loadSettings,
+  saveSettings,
+  loadConfig,
+  saveConfig,
+} from "./utils/localStorage";
 import searchEnginesConfig from "./data/searchEngines.json";
 
 const initialConfig: Config = searchEnginesConfig as Config;
@@ -65,13 +71,17 @@ function updateUrlParameter(query: string, tabId: string) {
 }
 
 export function App() {
-  // 設定の状態管理
-  const [settings, setSettings] = useState<AppSettings>(defaultSettings);
+  // 設定の状態管理（ローカルストレージから読み込み）
+  const [settings, setSettings] = useState<AppSettings>(() => {
+    const loaded = loadSettings();
+    return loaded || defaultSettings;
+  });
 
-  // 検索エンジンの設定（編集可能）
-  const [config, setConfig] = useState<Config>(
-    JSON.parse(JSON.stringify(initialConfig))
-  );
+  // 検索エンジンの設定（ローカルストレージから読み込み、なければ初期設定）
+  const [config, setConfig] = useState<Config>(() => {
+    const loaded = loadConfig();
+    return loaded || JSON.parse(JSON.stringify(initialConfig));
+  });
 
   // UI状態
   const [activeTabId, setActiveTabId] = useState(config.tabs[0]?.id || "");
@@ -170,10 +180,12 @@ export function App() {
 
   const handleSettingsChange = (newSettings: AppSettings) => {
     setSettings(newSettings);
+    saveSettings(newSettings);
   };
 
   const handleSettingsReset = () => {
     setSettings(defaultSettings);
+    saveSettings(defaultSettings);
   };
 
   const handleDeleteRequest = (engineId: string) => {
@@ -195,6 +207,7 @@ export function App() {
         ),
       };
       setConfig(newConfig);
+      saveConfig(newConfig);
     }
     setDeleteTarget(null);
   };
@@ -219,6 +232,7 @@ export function App() {
         engines,
       };
       setConfig(newConfig);
+      saveConfig(newConfig);
     }
     setShowAddEngineModal(false);
   };
@@ -238,6 +252,7 @@ export function App() {
     tabs.splice(addTabPosition, 0, tab);
     newConfig.tabs = tabs;
     setConfig(newConfig);
+    saveConfig(newConfig);
     setShowAddTabModal(false);
     setActiveTabId(tab.id);
   };
@@ -256,6 +271,7 @@ export function App() {
     const newConfig = { ...config };
     newConfig.tabs = newConfig.tabs.filter((tab) => tab.id !== deleteTabTarget);
     setConfig(newConfig);
+    saveConfig(newConfig);
 
     // 削除したタブがアクティブだった場合、最初のタブに切り替え
     if (deleteTabTarget === activeTabId && newConfig.tabs.length > 0) {
@@ -276,6 +292,7 @@ export function App() {
     tabs.splice(toIndex, 0, movedTab);
     newConfig.tabs = tabs;
     setConfig(newConfig);
+    saveConfig(newConfig);
   };
 
   const handleDragStart = (engineId: string, index: number) => {
@@ -329,6 +346,7 @@ export function App() {
         }
 
         setConfig(newConfig);
+        saveConfig(newConfig);
         // ドラッグ元の情報を更新
         setDraggedItem({
           ...draggedItem,
@@ -348,9 +366,23 @@ export function App() {
     setHoverIndex(null);
   };
 
+  const handleConfigImport = (newConfig: Config) => {
+    setConfig(newConfig);
+    saveConfig(newConfig);
+    // インポート後は最初のタブに切り替え
+    if (newConfig.tabs.length > 0) {
+      setActiveTabId(newConfig.tabs[0].id);
+    }
+  };
+
   return (
     <div className="app">
       <header className="app-header">
+        {editMode && (
+          <div className="edit-mode-overlay">
+            編集モード：検索エンジンやタブをドラッグして並び替え、または削除できます
+          </div>
+        )}
         <h1 className="app-title">World Dev Info Searcher</h1>
         <p className="app-subtitle">
           開発技術＋αの情報収集に使える軽量メタ検索エンジン
@@ -385,12 +417,6 @@ export function App() {
           onTabDelete={handleDeleteTabRequest}
           onAddTab={handleAddTabRequest}
         />
-
-        {editMode && (
-          <div className="edit-mode-notice">
-            編集モード：検索エンジンをドラッグして並び替え、または削除できます
-          </div>
-        )}
 
         {activeTab && (
           <SearchResults
@@ -428,7 +454,9 @@ export function App() {
       {showSettings && (
         <Settings
           settings={settings}
+          config={config}
           onSettingsChange={handleSettingsChange}
+          onConfigImport={handleConfigImport}
           onClose={() => setShowSettings(false)}
           onReset={handleSettingsReset}
         />

@@ -220,6 +220,7 @@ body {
       minmax(calc(100% / var(--min-cards-per-row) - 1rem),
         1fr));
   gap: 1rem;
+  align-items: stretch;
 }
 
 /* Search Engine Card */
@@ -297,7 +298,7 @@ body {
 .delete-btn {
   position: absolute;
   top: 0.5rem;
-  right: 0.5rem;
+  right: 3.5rem;
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
@@ -328,14 +329,22 @@ body {
   font-style: italic;
 }
 
-.edit-mode-notice {
-  padding: 0.75rem 1rem;
-  background-color: var(--primary-color);
+.edit-mode-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(59, 130, 246, 0.95);
   color: white;
-  border-radius: 0.375rem;
-  margin-bottom: 1rem;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: calc(0.875rem * var(--font-scale));
+  font-weight: 600;
+  z-index: 5;
+  padding: 1rem;
+  text-align: center;
 }
 
 /* Footer */
@@ -511,6 +520,35 @@ body {
   color: var(--text-primary);
 }
 
+.settings-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.settings-tab {
+  flex: 1;
+  padding: 1rem;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-size: calc(0.8rem * var(--font-scale));
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.settings-tab:hover {
+  background-color: var(--surface-color);
+  color: var(--text-primary);
+}
+
+.settings-tab.active {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+}
+
 .settings-content {
   padding: 1.5rem;
 }
@@ -648,10 +686,25 @@ body {
   border-left: 3px solid var(--primary-color);
 }
 
+.settings-info h4 {
+  font-size: calc(0.875rem * var(--font-scale));
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 0.5rem 0;
+}
+
 .settings-info p {
   font-size: calc(0.75rem * var(--font-scale));
   color: var(--text-secondary);
   margin: 0;
+}
+
+.settings-info code {
+  background-color: var(--bg-color);
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-family: monospace;
+  font-size: calc(0.75rem * var(--font-scale));
 }
 
 .settings-note {
@@ -659,6 +712,54 @@ body {
   color: var(--text-secondary);
   margin-top: 0.5rem;
   margin-bottom: 0;
+}
+
+.settings-note code {
+  background-color: var(--surface-color);
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-family: monospace;
+  font-size: calc(0.7rem * var(--font-scale));
+}
+
+.import-export-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.export-btn,
+.import-btn {
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: 0.375rem;
+  font-size: calc(0.875rem * var(--font-scale));
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.export-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.export-btn:hover {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+.import-btn {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+}
+
+.import-btn:hover {
+  background-color: var(--surface-color);
+  border-color: var(--primary-color);
 }
 
 .settings-checkboxes {
@@ -707,6 +808,60 @@ body {
 }
 
 .reset-btn:hover {
+  background-color: #ea580c;
+}
+
+.settings-warning {
+  background-color: #fef3c7;
+  border: 2px solid #f59e0b;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+[data-theme="dark"] .settings-warning {
+  background-color: #451a03;
+  border-color: #f59e0b;
+}
+
+.settings-warning p {
+  font-size: calc(0.875rem * var(--font-scale));
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.settings-warning p:last-child {
+  margin-bottom: 0;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: inherit;
+  padding: 0;
+  font-weight: 600;
+}
+
+.link-button:hover {
+  color: var(--primary-hover);
+}
+
+.danger-btn {
+  padding: 0.75rem 2rem;
+  background-color: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: calc(0.875rem * var(--font-scale));
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.danger-btn:hover {
   background-color: #ea580c;
   transform: translateY(-1px);
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
@@ -876,24 +1031,27 @@ body {
 }
 
 /* Add Engine Button in Search Results */
-.search-result-item {
+/* Search result wrapper with overlay add button */
+.search-result-wrapper {
+  position: relative;
+  min-width: 0;
   display: flex;
-  align-items: stretch;
-  gap: 0.5rem;
-  min-width: 0;
-  /* Allow grid item to shrink */
+  height: 100%;
 }
 
-.search-result-item .search-engine-card {
-  flex: 1;
-  min-width: 0;
-  /* Prevent flex item from overflowing */
+.search-result-wrapper .search-engine-card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.add-engine-btn {
+/* Overlay add button that appears between cards */
+.add-engine-btn-overlay {
+  position: absolute;
+  top: 0;
   width: 3rem;
-  min-width: 3rem;
-  align-self: stretch;
+  height: 100%;
   border-radius: 0.5rem;
   background-color: var(--primary-color);
   color: white;
@@ -906,18 +1064,60 @@ body {
   justify-content: center;
   transition: all 0.2s;
   box-shadow: var(--shadow);
-  opacity: 0.6;
+  opacity: 0.5;
+  z-index: 10;
 }
 
-.add-engine-btn:hover {
+.add-engine-btn-left {
+  left: -0.5rem;
+  transform: translateX(-50%);
+}
+
+.add-engine-btn-right {
+  right: -0.5rem;
+  transform: translateX(50%);
+}
+
+.add-engine-btn-overlay:hover {
   background-color: var(--primary-hover);
-  transform: translateY(-2px);
   box-shadow: var(--shadow-md);
-  opacity: 1;
+  opacity: 0.9;
 }
 
-.add-engine-btn:active {
-  transform: translateY(0);
+.add-engine-btn-left:hover {
+  transform: translateX(-50%) scale(1.05);
+}
+
+.add-engine-btn-right:hover {
+  transform: translateX(50%) scale(1.05);
+}
+
+.add-engine-btn-left:active {
+  transform: translateX(-50%) scale(0.95);
+}
+
+.add-engine-btn-right:active {
+  transform: translateX(50%) scale(0.95);
+}
+
+/* Empty state add button */
+.add-engine-btn-empty {
+  width: 100%;
+  padding: 3rem 2rem;
+  border-radius: 0.75rem;
+  background-color: var(--surface-color);
+  color: var(--text-secondary);
+  border: 2px dashed var(--border-color);
+  font-size: calc(1rem * var(--font-scale));
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.add-engine-btn-empty:hover {
+  background-color: var(--bg-color);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 /* Tab Bar Container */
@@ -929,32 +1129,65 @@ body {
   margin-bottom: 1.5rem;
 }
 
-.add-tab-btn {
-  padding: 0.5rem 1rem;
+/* Tab wrapper for overlay buttons */
+.tab-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Overlay add tab button */
+.add-tab-btn-overlay {
+  position: absolute;
+  top: 50%;
+  width: 2.5rem;
+  height: 80%;
+  transform: translateY(-50%);
   background-color: var(--primary-color);
   color: white;
   border: none;
   border-radius: 0.375rem;
-  font-size: calc(1rem * var(--font-scale));
+  font-size: calc(1.2rem * var(--font-scale));
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
-  min-width: 2.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.6;
-}
-
-.add-tab-btn:hover {
-  background-color: var(--primary-hover);
-  transform: translateY(-1px);
+  opacity: 0.5;
+  z-index: 10;
   box-shadow: var(--shadow);
-  opacity: 1;
 }
 
-.add-tab-btn:active {
-  transform: translateY(0);
+.add-tab-btn-left {
+  left: -0.25rem;
+  transform: translate(-50%, -50%);
+}
+
+.add-tab-btn-right {
+  right: -0.25rem;
+  transform: translate(50%, -50%);
+}
+
+.add-tab-btn-overlay:hover {
+  background-color: var(--primary-hover);
+  box-shadow: var(--shadow-md);
+  opacity: 0.9;
+}
+
+.add-tab-btn-left:hover {
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+.add-tab-btn-right:hover {
+  transform: translate(50%, -50%) scale(1.05);
+}
+
+.add-tab-btn-left:active {
+  transform: translate(-50%, -50%) scale(0.95);
+}
+
+.add-tab-btn-right:active {
+  transform: translate(50%, -50%) scale(0.95);
 }
 
 /* Tab Button Edit Mode */

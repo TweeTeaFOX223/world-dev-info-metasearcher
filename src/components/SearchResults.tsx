@@ -35,10 +35,11 @@ export function SearchResults({
     <div className="search-results" role="region" aria-label="検索結果">
       <div className="search-results-grid">
         {engines.map((engine, index) => (
-          <div className="search-result-item" key={engine.id}>
+          <div className="search-result-wrapper" key={engine.id}>
+            {/* 左側の追加ボタン（全カード） */}
             {editMode && onAddEngine && (
               <button
-                className="add-engine-btn"
+                className="add-engine-btn-overlay add-engine-btn-left"
                 onClick={() => onAddEngine(index)}
                 aria-label="この位置に検索エンジンを追加"
               >
@@ -73,10 +74,11 @@ export function SearchResults({
               }
               onDrop={onDrop ? () => onDrop(index) : undefined}
             />
+            {/* 右側の追加ボタン（最後のカードのみ） */}
             {editMode && onAddEngine && index === engines.length - 1 && (
               <button
-                className="add-engine-btn"
-                onClick={() => onAddEngine(engines.length)}
+                className="add-engine-btn-overlay add-engine-btn-right"
+                onClick={() => onAddEngine(index + 1)}
                 aria-label="最後に検索エンジンを追加"
               >
                 +
@@ -84,6 +86,15 @@ export function SearchResults({
             )}
           </div>
         ))}
+        {editMode && onAddEngine && engines.length === 0 && (
+          <button
+            className="add-engine-btn-empty"
+            onClick={() => onAddEngine(0)}
+            aria-label="検索エンジンを追加"
+          >
+            + 検索エンジンを追加
+          </button>
+        )}
       </div>
     </div>
   );

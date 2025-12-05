@@ -71,10 +71,11 @@ export function TabBar({
           const isDragging = draggedTabIndex === originalIndex;
 
           return (
-            <>
+            <div className="tab-wrapper" key={tab.id}>
+              {/* 左側の追加ボタン（全タブ） */}
               {editMode && onAddTab && (
                 <button
-                  className="add-tab-btn"
+                  className="add-tab-btn-overlay add-tab-btn-left"
                   onClick={() => onAddTab(displayIndex)}
                   aria-label="この位置にタブを追加"
                 >
@@ -82,7 +83,6 @@ export function TabBar({
                 </button>
               )}
               <button
-                key={tab.id}
                 onClick={() => onTabChange(tab.id)}
                 className={`tab-button ${
                   activeTabId === tab.id ? "active" : ""
@@ -111,18 +111,19 @@ export function TabBar({
                 )}
                 {tab.name}
               </button>
-            </>
+              {/* 右側の追加ボタン（全タブ） */}
+              {editMode && onAddTab && (
+                <button
+                  className="add-tab-btn-overlay add-tab-btn-right"
+                  onClick={() => onAddTab(displayIndex + 1)}
+                  aria-label="この位置にタブを追加"
+                >
+                  +
+                </button>
+              )}
+            </div>
           );
         })}
-        {editMode && onAddTab && (
-          <button
-            className="add-tab-btn"
-            onClick={() => onAddTab(tabs.length)}
-            aria-label="最後にタブを追加"
-          >
-            +
-          </button>
-        )}
       </div>
     </div>
   );
