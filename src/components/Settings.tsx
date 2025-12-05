@@ -368,7 +368,7 @@ export function Settings({
               {/* リセットボタン */}
               <div className="settings-reset">
                 <button className="reset-btn" onClick={handleResetClick}>
-                  設定をリセット
+                  表示設定をリセット
                 </button>
               </div>
             </>

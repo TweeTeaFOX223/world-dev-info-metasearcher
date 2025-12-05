@@ -378,15 +378,17 @@ export function App() {
   return (
     <div className="app">
       <header className="app-header">
-        {editMode && (
-          <div className="edit-mode-overlay">
-            編集モード：検索エンジンやタブをドラッグして並び替え、または削除できます
-          </div>
-        )}
-        <h1 className="app-title">World Dev Info Searcher</h1>
-        <p className="app-subtitle">
-          開発技術＋αの情報収集に使える軽量メタ検索エンジン
-        </p>
+        <div className="header-title-container">
+          {editMode && (
+            <div className="edit-mode-overlay">
+              編集モード：検索エンジンやタブをドラッグして並び替え、または削除できます
+            </div>
+          )}
+          <h1 className="app-title">World Dev Info Searcher</h1>
+          <p className="app-subtitle">
+            開発技術＋αの情報収集に使える軽量メタ検索エンジン
+          </p>
+        </div>
         <div className="header-buttons">
           <button
             className="settings-btn"
