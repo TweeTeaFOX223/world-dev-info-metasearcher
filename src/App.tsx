@@ -451,7 +451,11 @@ export function App() {
         </p>
       </footer>
 
-      <ScrollToTop />
+      <ScrollToTop
+        editMode={editMode}
+        onSettingsClick={() => setShowSettings(true)}
+        onEditToggle={() => setEditMode(!editMode)}
+      />
 
       {showSettings && (
         <Settings

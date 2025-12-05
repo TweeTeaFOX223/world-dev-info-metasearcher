@@ -1,13 +1,20 @@
 # world-dev-info-metasearcher
-![screenshot](https://raw.githubusercontent.com/TweeTeaFOX223/world-dev-info-metasearcher/refs/heads/main/ScreenShot.png)
+![screenshot](https://raw.githubusercontent.com/TweeTeaFOX223/world-dev-info-metasearcher/refs/heads/main/ScreenShot.png)  
+  
+![screenshot](https://raw.githubusercontent.com/TweeTeaFOX223/world-dev-info-metasearcher/refs/heads/main/ScreenShot3.png)     
+  
+  
+![screenshot](https://raw.githubusercontent.com/TweeTeaFOX223/world-dev-info-metasearcher/refs/heads/main/ScreenShot4.png)     
+  
 ## アプリの概要 
 World Dev Info Searcher（WDIF）は、Claude Codeでサクッと開発した軽量メタ検索エンジンです。検索窓に単語を入力してエンターすると、開発技術＋αの情報収集に有用と思われる検索結果のURLのリストを表示します。  
   
-- URLに「選択中のタブ」と「検索中のワード」の情報がパラメータとして入ります。ページをブラウザブックマークすることで、素早く現在の検索結果にジャンプすることが可能です。
-- `./src/data/searchEngines.json`を書き換えた後にビルドすることで、使用する検索エンジンをカスタムすることが可能です。
-- サーバー不要でローカルのブラウザから直接開く(fileプロトコルで開く)だけで動作する、単一HTMLファイルにビルドすることが可能です。→`npm run build-offline`。LINEやDiscordやメールでHTMLファイルを送るだけでアプリの共有が可能です。
-- アプリ(HTMLファイル)のサイズは50KB程度で非常に小さいです（Preactをフレームワークに採用しているため）。
-- 検索結果URLを生成する処理はクライアント上(ブラウザ内)で行われます。単一HTMLファイルを開いて使用する場合だとプライバシー的に安全です。※GitHub PagesのやつだとGitHub側に検索クエリが記録される可能性があるので一応注意です。
+- 基本的な「**検索エンジンの表示設定**」と「**検索エンジンとタブの編集と入れ替え**」「**設定のインポート＆エクスポート**」が可能です。設定は[ブラウザのローカルストレージ](https://zenn.dev/crebo_tech/articles/article-0019-20251103#%E3%82%B7%E3%83%BC%E3%82%AF%E3%83%AC%E3%83%83%E3%83%88%E3%83%A2%E3%83%BC%E3%83%89%EF%BC%88%E3%83%97%E3%83%A9%E3%82%A4%E3%83%99%E3%83%BC%E3%83%88%E3%83%A2%E3%83%BC%E3%83%89%EF%BC%89%E3%81%AE%E6%8C%99%E5%8B%95)に保存されます。「シークレットモード使用時にアクセスし編集を行った後にブラウザを閉じる」「ブラウザの設定から手動で履歴＆サイト設定データを消去する」という操作をすると、設定が消えてしまうので気をつけてください。  
+- URLに「選択中のタブ」と「検索中のワード」の情報がパラメータとして入ります。ページをブラウザブックマークしておくことで、素早く現在の検索結果にジャンプすることが可能です。  
+- `./src/data/searchEngines.json`を書き換えた後にビルドすることで、初期設定で使用する検索エンジンをカスタムすることが可能です。エクスポート機能で保存した設定ファイルの内容を使用することも可能です。  
+- サーバー不要でローカルのブラウザから直接開く(fileプロトコルで開く)だけで動作する、単一HTMLファイルにビルドすることが可能です。→`npm run build-offline`。LINEやDiscordやメールでHTMLファイルを送るだけでアプリの共有が可能です。 
+- アプリ(HTMLファイル)のサイズは50KB程度で非常に小さいです（Preactをフレームワークに採用しているため）。  
+- 検索結果URLを生成する処理はクライアント上(ブラウザ内)で行われます。単一HTMLファイルを開いて使用する場合だとプライバシー的に安全です。※GitHub PagesのやつだとGitHub側に検索クエリが記録される可能性があるので一応注意です。  
 
 ## ★このアプリを今すぐ使用！
 ### 方法A：GitHub Pagesにアクセス
@@ -55,14 +62,14 @@ World Dev Info Searcher（WDIF）は、Claude Codeでサクッと開発した軽
   - [［2］：依存関係を入れると動かせる](#2依存関係を入れると動かせる)
   - [［3A］：httpプロトコルで動くやつをビルド(デフォルト)](#3ahttpプロトコルで動くやつをビルドデフォルト)
   - [［3B］：httpプロトコル＋fileプロトコルでも動くやつをビルド](#3bhttpプロトコルfileプロトコルでも動くやつをビルド)
-  - [検索エンジンのカスタム方法](#検索エンジンのカスタム方法)
+  - [検索エンジン初期設定のカスタム方法](#検索エンジン初期設定のカスタム方法)
 - [プロジェクトのファイル構成](#プロジェクトのファイル構成)
-- [ライセンス](#ライセンス)
-- [開発参加](#開発参加)
-- [検索エンジン設定に入れたサイトの一覧](#検索エンジン設定に入れたサイトの一覧)
+- [検索エンジン初期設定に入れたサイトの一覧](#検索エンジン初期設定に入れたサイトの一覧)
   - [JSONの生データ](#jsonの生データ)
   - [マークダウンの表データ(見やすい)](#マークダウンの表データ見やすい)
 - [GitHub Pages(GitHub Actionsの設定)](#github-pagesgithub-actionsの設定)
+- [開発参加](#開発参加)
+- [ライセンス](#ライセンス)
 
 
 
@@ -132,7 +139,7 @@ npm run build-offline
 
 
 
-## 検索エンジンのカスタム方法
+## 検索エンジン初期設定のカスタム方法
 
 `src/data/searchEngines.json` を編集して、検索エンジンを追加・削除できます。
 
@@ -174,45 +181,63 @@ npm run build-offline
 
 ```
 project-root/
+├── .github/
+│   └── workflows/
+│       └── main.yml              # GitHub Actions CI/CD設定
+├── .claude/
+│   └── settings.local.json       # Claude Code設定
+├── config_sample/                # サンプル設定ファイル
+│   ├── wdis-display-settings.json    # 表示設定のサンプル
+│   └── wdis-search-engines.json      # 検索エンジン設定のサンプル
+├── dist-offline/
+│   └── index.html                # 単一HTMLビルド出力
 ├── scripts/
-│   └── generateMarkdownTable.ts # 検索エンジン設定をMD変換。ここだけnode.js
+│   └── generateMarkdownTable.ts  # 検索エンジン設定をMD変換。ここだけnode.js
 ├── src/
-│   ├── components/       # Preactコンポーネント
-│   │   ├── TabBar.tsx
-│   │   ├── SearchBox.tsx
-│   │   ├── SearchResults.tsx
-│   │   └── SearchEngineCard.tsx
+│   ├── components/               # Preactコンポーネント
+│   │   ├── AddEngineModal.tsx    # 検索エンジン追加モーダル
+│   │   ├── AddTabModal.tsx       # タブ追加モーダル
+│   │   ├── ConfirmModal.tsx      # 確認ダイアログ
+│   │   ├── DeleteTabModal.tsx    # タブ削除確認モーダル
+│   │   ├── ScrollToTop.tsx       # フローティングアクションボタン
+│   │   ├── SearchBox.tsx         # 検索ボックス
+│   │   ├── SearchEngineCard.tsx  # 検索エンジンカード
+│   │   ├── SearchResults.tsx     # 検索結果グリッド
+│   │   ├── Settings.tsx          # 設定パネル
+│   │   └── TabBar.tsx            # タブバー
 │   ├── data/
-│   │   └── searchEngines.json  # 検索エンジン設定 ※カスタムする場合は書き換える
+│   │   └── searchEngines.json    # 検索エンジン設定 ※カスタムする場合は書き換える
 │   ├── types/
-│   │   └── index.ts      # 型定義
+│   │   └── index.ts              # 型定義
 │   ├── utils/
-│   │   └── searchUtils.ts  # ユーティリティ関数
-│   ├── App.tsx           # メインアプリケーション
-│   ├── main.tsx          # エントリーポイント
-│   └── style.css         # スタイル
-├── vite.config.ts        # Vite設定
-├── vite.config.offline.ts # 単一HTMLビルド用のVite設定
-├── tsconfig.json         # TypeScript設定
-├── tsconfig.app.json     # TypeScript設定(クライアント)
-├── tsconfig.node.json    # TypeScript設定(node.js)
-├── package.json #依存パッケージとタスク
-└── index.html #エントリーポイント
+│   │   ├── localStorage.ts       # ローカルストレージ操作ユーティリティ
+│   │   └── searchUtils.ts        # 検索URL生成ユーティリティ
+│   ├── App.tsx                   # メインアプリケーション
+│   ├── index.html                # HTMLエントリーポイント
+│   ├── main.tsx                  # JSエントリーポイント
+│   └── style.css                 # グローバルスタイル
+├── .gitattributes                # Git属性設定
+├── .gitignore                    # Git除外設定
+├── A2.png                        # スクリーンショット(一時)
+├── A3.png                        # スクリーンショット(一時)
+├── LICENSE                       # ライセンス
+├── README.md                     # プロジェクト説明
+├── ScreenShot.png                # スクリーンショット
+├── ScreenShot2.png               # スクリーンショット
+├── eslint.config.ts              # ESLint設定
+├── package-lock.json             # 依存パッケージロックファイル
+├── package.json                  # 依存パッケージとタスク
+├── search-engines-table.md       # 検索エンジン一覧表(自動生成)
+├── tsconfig.json                 # TypeScript基本設定
+├── tsconfig.app.json             # TypeScript設定(クライアント)
+├── tsconfig.node.json            # TypeScript設定(node.js)
+├── vite.config.ts                # Vite設定
+└── vite.config.offline.ts        # 単一HTMLビルド用のVite設定
+
 ```
 
-
-# ライセンス
-
-「MIT License」です。
-
-# 開発参加
-
-プルリクエストは大歓迎です！。このアプリのアイディアを利用して全く別に新規作成することも大歓迎です！
-
-訪問者の皆さんも何かしらの用途に特化したメタ検索エンジンを好きな技術スタックで作ってみると面白いのではないかと思います。
-
-
-# 検索エンジン設定に入れたサイトの一覧
+  
+# 検索エンジン初期設定に入れたサイトの一覧
 
 ## JSONの生データ  
 
@@ -233,3 +258,13 @@ https://github.com/TweeTeaFOX223/world-dev-info-metasearcher/blob/main/search-en
 # GitHub Pages(GitHub Actionsの設定)
 `npm run build-offline`を実行して単一HTMLをビルドしてプッシュした時に、GitHub Pagesにビルド＆デプロイするようになっています。   
 https://github.com/TweeTeaFOX223/world-dev-info-metasearcher/blob/main/.github/workflows/main.yml  
+  
+# 開発参加  
+  
+プルリクエストは大歓迎です！。このアプリのアイディアを利用して全く別に新規作成することも大歓迎です！
+
+訪問者の皆さんも何かしらの用途に特化したメタ検索エンジンを好きな技術スタックで作ってみると面白いのではないかと思います。
+  
+# ライセンス  
+  
+「MIT License」です。

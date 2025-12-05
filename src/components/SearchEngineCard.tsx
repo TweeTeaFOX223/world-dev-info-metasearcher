@@ -95,9 +95,8 @@ export function SearchEngineCard({
         </p>
       )}
       {editMode && (
-        <div className="drag-hint">
-          {/* モバイル判定は簡易的 */}
-          {window.innerWidth <= 768 ? "長押ししてドラッグ" : "ドラッグして移動"}
+        <div className="drag-handle" aria-label="ドラッグして移動">
+          ☰
         </div>
       )}
     </>
