@@ -7,7 +7,7 @@
 ![screenshot](https://raw.githubusercontent.com/TweeTeaFOX223/world-dev-info-metasearcher/refs/heads/main/ScreenShot4.png)     
   
 ## アプリの概要 
-World Dev Info Searcher（WDIF）は、Claude Codeでサクッと開発した軽量メタ検索エンジンです。検索窓に単語を入力してエンターすると、開発技術＋αの情報収集に有用と思われる検索結果のURLのリストを表示します。  
+World Dev Info Meta Searcher（WDIMS）は、Claude Codeでサクッと開発した軽量メタ検索エンジンです。検索窓に単語を入力してエンターすると、開発技術＋αの情報収集に有用と思われる検索結果のURLのリストを表示します。  
   
 - 基本的な「**検索エンジンの表示設定**」と「**検索エンジンとタブの編集と入れ替え**」「**設定のインポート＆エクスポート**」が可能です。
 - URLに「選択中のタブ」と「検索中のワード」の情報がパラメータとして入ります。ページをブラウザブックマークしておくことで、素早く現在の検索結果にジャンプすることが可能です。  

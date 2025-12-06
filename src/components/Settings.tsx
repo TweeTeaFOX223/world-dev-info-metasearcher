@@ -113,12 +113,12 @@ export function Settings({
   // エクスポート機能
   const handleExportSettings = () => {
     const json = exportSettings(settings);
-    downloadJSON(json, "設定ファイル.wdis_ui.json");
+    downloadJSON(json, "設定ファイル.wdims_ui.json");
   };
 
   const handleExportConfig = () => {
     const json = exportConfig(config);
-    downloadJSON(json, "設定ファイル.wdis_engine.json");
+    downloadJSON(json, "設定ファイル.wdims_engine.json");
   };
 
   // インポート機能

@@ -123,9 +123,9 @@ export function App() {
   // 検索クエリが変更されたらページタイトルを更新
   useEffect(() => {
     if (searchQuery) {
-      document.title = `${searchQuery} - WDIS メタ検索`;
+      document.title = `${searchQuery} - WDIMS メタ検索`;
     } else {
-      document.title = "WDIS メタ検索エンジン";
+      document.title = "WDIMS メタ検索エンジン";
     }
   }, [searchQuery]);
 
@@ -383,9 +383,11 @@ export function App() {
               編集モード：検索エンジンやタブをドラッグして並び替え、または削除できます
             </div>
           )}
-          <h1 className="app-title">World Dev Info Searcher</h1>
+          <h1 className="app-title">
+            World Dev Info Meta Searcher（WDIMS）on client
+          </h1>
           <p className="app-subtitle">
-            開発技術＋αの情報収集に使える軽量メタ検索エンジン
+            開発技術＋αの情報収集に使える軽量メタ検索エンジン：クライアント版(ブラウザのローカルストレージに設定保存)
           </p>
         </div>
         <div className="header-buttons">
