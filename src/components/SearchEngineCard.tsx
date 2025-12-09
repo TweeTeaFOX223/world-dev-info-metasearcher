@@ -9,6 +9,7 @@ interface SearchEngineCardProps {
   showDescription?: boolean;
   showUrl?: boolean;
   onDelete?: () => void;
+  onEdit?: () => void;
   onDragStart?: (e: DragEvent) => void;
   onDragEnd?: (e: DragEvent) => void;
   onDragOver?: (e: DragEvent) => void;
@@ -24,6 +25,7 @@ export function SearchEngineCard({
   showDescription = true,
   showUrl = true,
   onDelete,
+  onEdit,
   onDragStart,
   onDragEnd,
   onDragOver,
@@ -66,9 +68,22 @@ export function SearchEngineCard({
 
   const content = (
     <>
+      {editMode && onEdit && (
+        <button
+          className="card-edit-btn"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onEdit();
+          }}
+          aria-label="編集"
+        >
+          ✎
+        </button>
+      )}
       {editMode && onDelete && (
         <button
-          className="delete-btn"
+          className="card-delete-btn"
           onClick={handleDeleteClick}
           aria-label="削除"
         >

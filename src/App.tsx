@@ -9,6 +9,8 @@ import { ConfirmModal } from "./components/ConfirmModal";
 import { AddEngineModal } from "./components/AddEngineModal";
 import { AddTabModal } from "./components/AddTabModal";
 import { DeleteTabModal } from "./components/DeleteTabModal";
+import { EditEngineModal } from "./components/EditEngineModal";
+import { EditTabModal } from "./components/EditTabModal";
 import { getTabById } from "./utils/searchUtils";
 import {
   loadSettings,
@@ -104,6 +106,11 @@ export function App() {
   const [showAddTabModal, setShowAddTabModal] = useState(false);
   const [addTabPosition, setAddTabPosition] = useState<number>(0);
   const [deleteTabTarget, setDeleteTabTarget] = useState<string | null>(null);
+  const [editEngineTarget, setEditEngineTarget] = useState<{
+    tabId: string;
+    engineId: string;
+  } | null>(null);
+  const [editTabTarget, setEditTabTarget] = useState<string | null>(null);
 
   // 初回マウント時にURLパラメータから検索クエリとタブIDを読み取る
   useEffect(() => {
@@ -123,9 +130,9 @@ export function App() {
   // 検索クエリが変更されたらページタイトルを更新
   useEffect(() => {
     if (searchQuery) {
-      document.title = `${searchQuery} - WDIMS メタ検索`;
+      document.title = `${searchQuery} - WDIS メタ検索`;
     } else {
-      document.title = "WDIMS メタ検索エンジン";
+      document.title = "WDIS メタ検索エンジン";
     }
   }, [searchQuery]);
 
@@ -240,6 +247,39 @@ export function App() {
     setShowAddEngineModal(false);
   };
 
+  const handleEditEngineRequest = (tabId: string, engineId: string) => {
+    setEditEngineTarget({ tabId, engineId });
+  };
+
+  const handleEditEngine = (updatedEngine: SearchEngine) => {
+    if (!editEngineTarget) return;
+
+    const newConfig = { ...config };
+    const tabIndex = newConfig.tabs.findIndex(
+      (tab) => tab.id === editEngineTarget.tabId
+    );
+    if (tabIndex !== -1) {
+      const engineIndex = newConfig.tabs[tabIndex].engines.findIndex(
+        (eng) => eng.id === editEngineTarget.engineId
+      );
+      if (engineIndex !== -1) {
+        const engines = [...newConfig.tabs[tabIndex].engines];
+        engines[engineIndex] = updatedEngine;
+        newConfig.tabs[tabIndex] = {
+          ...newConfig.tabs[tabIndex],
+          engines,
+        };
+        setConfig(newConfig);
+        saveConfig(newConfig);
+      }
+    }
+    setEditEngineTarget(null);
+  };
+
+  const handleEditEngineCancel = () => {
+    setEditEngineTarget(null);
+  };
+
   const handleAddTabRequest = (position: number) => {
     setAddTabPosition(position);
     setShowAddTabModal(true);
@@ -282,6 +322,32 @@ export function App() {
 
   const handleDeleteTabCancel = () => {
     setDeleteTabTarget(null);
+  };
+
+  const handleEditTabRequest = (tabId: string) => {
+    setEditTabTarget(tabId);
+  };
+
+  const handleEditTab = (updatedTab: TabConfig) => {
+    if (!editTabTarget) return;
+
+    const newConfig = { ...config };
+    const tabIndex = newConfig.tabs.findIndex(
+      (tab) => tab.id === editTabTarget
+    );
+    if (tabIndex !== -1) {
+      newConfig.tabs[tabIndex] = {
+        ...newConfig.tabs[tabIndex],
+        name: updatedTab.name,
+      };
+      setConfig(newConfig);
+      saveConfig(newConfig);
+    }
+    setEditTabTarget(null);
+  };
+
+  const handleEditTabCancel = () => {
+    setEditTabTarget(null);
   };
 
   const handleTabReorder = (fromIndex: number, toIndex: number) => {
@@ -380,14 +446,12 @@ export function App() {
         <div className="header-title-container">
           {editMode && (
             <div className="edit-mode-overlay">
-              編集モード：検索エンジンやタブをドラッグして並び替え、または削除できます
+              編集モード：検索エンジンやタブをドラッグして並び替え、または編集＆削除できます
             </div>
           )}
-          <h1 className="app-title">
-            World Dev Info Meta Searcher（WDIMS）on client
-          </h1>
+          <h1 className="app-title">World Dev Info Searcher</h1>
           <p className="app-subtitle">
-            開発技術＋αの情報収集に使える軽量メタ検索エンジン：クライアント版(ブラウザのローカルストレージに設定保存)
+            開発技術＋αの情報収集に使える軽量メタ検索エンジン
           </p>
         </div>
         <div className="header-buttons">
@@ -399,7 +463,7 @@ export function App() {
             ⚙️ 設定
           </button>
           <button
-            className={`edit-btn ${editMode ? "active" : ""}`}
+            className={`header-edit-btn ${editMode ? "active" : ""}`}
             onClick={() => setEditMode(!editMode)}
             aria-label={editMode ? "編集モードを終了" : "編集モードを開始"}
           >
@@ -418,6 +482,7 @@ export function App() {
           onTabChange={handleTabChange}
           onTabReorder={handleTabReorder}
           onTabDelete={handleDeleteTabRequest}
+          onTabEdit={handleEditTabRequest}
           onAddTab={handleAddTabRequest}
         />
 
@@ -430,6 +495,9 @@ export function App() {
             showDescription={settings.showDescription}
             showUrl={settings.showUrl}
             onDelete={handleDeleteRequest}
+            onEdit={(engineId) =>
+              handleEditEngineRequest(activeTabId, engineId)
+            }
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
             onDragOver={handleDragOver}
@@ -495,6 +563,33 @@ export function App() {
           onCancel={handleDeleteTabCancel}
         />
       )}
+
+      {editEngineTarget &&
+        (() => {
+          const tab = config.tabs.find((t) => t.id === editEngineTarget.tabId);
+          const engine = tab?.engines.find(
+            (e) => e.id === editEngineTarget.engineId
+          );
+          return engine ? (
+            <EditEngineModal
+              engine={engine}
+              onSave={handleEditEngine}
+              onCancel={handleEditEngineCancel}
+            />
+          ) : null;
+        })()}
+
+      {editTabTarget &&
+        (() => {
+          const tab = config.tabs.find((t) => t.id === editTabTarget);
+          return tab ? (
+            <EditTabModal
+              tab={tab}
+              onSave={handleEditTab}
+              onCancel={handleEditTabCancel}
+            />
+          ) : null;
+        })()}
     </div>
   );
 }

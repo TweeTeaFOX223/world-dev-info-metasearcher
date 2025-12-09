@@ -10,6 +10,7 @@ interface SearchResultsProps {
   showDescription?: boolean;
   showUrl?: boolean;
   onDelete?: (engineId: string) => void;
+  onEdit?: (engineId: string) => void;
   onDragStart?: (engineId: string, index: number) => void;
   onDragEnd?: () => void;
   onDragOver?: (index: number) => void;
@@ -25,6 +26,7 @@ export function SearchResults({
   showDescription = true,
   showUrl = true,
   onDelete,
+  onEdit,
   onDragStart,
   onDragEnd,
   onDragOver,
@@ -55,6 +57,7 @@ export function SearchResults({
               showUrl={showUrl}
               draggable={editMode}
               onDelete={onDelete ? () => onDelete(engine.id) : undefined}
+              onEdit={onEdit ? () => onEdit(engine.id) : undefined}
               onDragStart={
                 onDragStart
                   ? (e: DragEvent) => {

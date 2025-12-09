@@ -8,6 +8,7 @@ interface TabBarProps {
   onTabChange: (tabId: string) => void;
   onTabReorder?: (fromIndex: number, toIndex: number) => void;
   onTabDelete?: (tabId: string) => void;
+  onTabEdit?: (tabId: string) => void;
   onAddTab?: (position: number) => void;
 }
 
@@ -18,6 +19,7 @@ export function TabBar({
   onTabChange,
   onTabReorder,
   onTabDelete,
+  onTabEdit,
   onAddTab,
 }: TabBarProps) {
   const [draggedTabIndex, setDraggedTabIndex] = useState<number | null>(null);
@@ -100,6 +102,19 @@ export function TabBar({
                 onDragOver={(e) => editMode && handleDragOver(e, displayIndex)}
                 onDrop={(e) => editMode && handleDrop(e, displayIndex)}
               >
+                {editMode && onTabEdit && (
+                  <span
+                    className="tab-edit-btn"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onTabEdit(tab.id);
+                    }}
+                    aria-label="編集"
+                  >
+                    ✎
+                  </span>
+                )}
                 {editMode && onTabDelete && tabs.length > 1 && (
                   <span
                     className="tab-delete-btn"
