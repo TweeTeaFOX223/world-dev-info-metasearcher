@@ -449,7 +449,7 @@ export function App() {
               編集モード：検索エンジンやタブをドラッグして並び替え、または編集＆削除できます
             </div>
           )}
-          <h1 className="app-title">World Dev Info Searcher</h1>
+          <h1 className="app-title">World Dev Info Meta Searcher</h1>
           <p className="app-subtitle">
             開発技術＋αの情報収集に使える軽量メタ検索エンジン：クライアント版(ブラウザのローカルストレージに設定保存)
           </p>
