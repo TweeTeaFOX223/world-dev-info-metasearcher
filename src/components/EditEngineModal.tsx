@@ -31,7 +31,14 @@ export function EditEngineModal({
 
   // 選択されたタブの検索エンジン数を計算
   const selectedTab = allTabs.find((tab) => tab.id === selectedTabId);
-  const maxPosition = selectedTab ? selectedTab.engines.length - 1 : 0;
+  // 現在編集中のエンジンを除外した数を計算
+  const isCurrentTab = selectedTabId === currentTabId;
+  const engineCountInSelectedTab = selectedTab ? selectedTab.engines.length : 0;
+  // 同じタブ内での移動の場合は、自分自身を除外した数
+  // 別のタブへの移動の場合は、移動先のエンジン数+1（自分が追加される）
+  const maxPosition = isCurrentTab
+    ? Math.max(0, engineCountInSelectedTab - 1)
+    : engineCountInSelectedTab;
 
   // タブが変更された時に、位置を先頭（0）にリセット
   useEffect(() => {
@@ -155,7 +162,10 @@ export function EditEngineModal({
 
           <div className="form-group">
             <label htmlFor="engine-position">
-              表示順番：{position + 1}番目 / {maxPosition + 1}個中
+              表示順番：{position + 1}番目
+              {isCurrentTab
+                ? ` / ${maxPosition + 1}個中`
+                : ` / ${maxPosition + 1}個中（移動後）`}
             </label>
             <input
               id="engine-position"
@@ -169,7 +179,11 @@ export function EditEngineModal({
               className="form-range"
             />
             <p className="form-hint">
-              スライダーを動かして、このタブ内での表示順番を変更できます
+              {isCurrentTab
+                ? "スライダーを動かして、このタブ内での表示順番を変更できます"
+                : `移動先のタブ内での表示順番を選択できます${
+                    maxPosition === 0 ? "（移動後は1個のみ）" : ""
+                  }`}
             </p>
           </div>
 
