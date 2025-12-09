@@ -1,14 +1,24 @@
-import { useState } from "preact/hooks";
-import type { SearchEngine } from "../types";
+import { useState, useEffect } from "preact/hooks";
+import type { SearchEngine, TabConfig } from "../types";
 
 interface EditEngineModalProps {
   engine: SearchEngine;
-  onSave: (engine: SearchEngine) => void;
+  currentTabId: string;
+  currentPosition: number;
+  allTabs: TabConfig[];
+  onSave: (
+    engine: SearchEngine,
+    newTabId?: string,
+    newPosition?: number
+  ) => void;
   onCancel: () => void;
 }
 
 export function EditEngineModal({
   engine,
+  currentTabId,
+  currentPosition,
+  allTabs,
   onSave,
   onCancel,
 }: EditEngineModalProps) {
@@ -16,6 +26,19 @@ export function EditEngineModal({
   const [url, setUrl] = useState(engine.url);
   const [icon, setIcon] = useState(engine.icon || "");
   const [description, setDescription] = useState(engine.description || "");
+  const [selectedTabId, setSelectedTabId] = useState(currentTabId);
+  const [position, setPosition] = useState(currentPosition);
+
+  // 選択されたタブの検索エンジン数を計算
+  const selectedTab = allTabs.find((tab) => tab.id === selectedTabId);
+  const maxPosition = selectedTab ? selectedTab.engines.length - 1 : 0;
+
+  // タブが変更された時に、位置を先頭（0）にリセット
+  useEffect(() => {
+    if (selectedTabId !== currentTabId) {
+      setPosition(0);
+    }
+  }, [selectedTabId, currentTabId]);
 
   const handleSubmit = (e: Event) => {
     e.preventDefault();
@@ -33,7 +56,15 @@ export function EditEngineModal({
       description: description.trim() || undefined,
     };
 
-    onSave(updatedEngine);
+    // タブまたは位置が変更されている場合は、それらも渡す
+    const tabChanged = selectedTabId !== currentTabId;
+    const positionChanged = position !== currentPosition;
+
+    if (tabChanged || positionChanged) {
+      onSave(updatedEngine, selectedTabId, position);
+    } else {
+      onSave(updatedEngine);
+    }
   };
 
   return (
@@ -102,6 +133,44 @@ export function EditEngineModal({
               className="form-textarea"
               rows={3}
             />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="engine-tab">所属タブ</label>
+            <select
+              id="engine-tab"
+              value={selectedTabId}
+              onChange={(e) =>
+                setSelectedTabId((e.target as HTMLSelectElement).value)
+              }
+              className="form-input"
+            >
+              {allTabs.map((tab) => (
+                <option key={tab.id} value={tab.id}>
+                  {tab.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="engine-position">
+              表示順番：{position + 1}番目 / {maxPosition + 1}個中
+            </label>
+            <input
+              id="engine-position"
+              type="range"
+              min="0"
+              max={maxPosition}
+              value={position}
+              onInput={(e) =>
+                setPosition(Number((e.target as HTMLInputElement).value))
+              }
+              className="form-range"
+            />
+            <p className="form-hint">
+              スライダーを動かして、このタブ内での表示順番を変更できます
+            </p>
           </div>
 
           <div className="modal-buttons">

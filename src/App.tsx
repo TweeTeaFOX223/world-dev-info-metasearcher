@@ -251,28 +251,77 @@ export function App() {
     setEditEngineTarget({ tabId, engineId });
   };
 
-  const handleEditEngine = (updatedEngine: SearchEngine) => {
+  const handleEditEngine = (
+    updatedEngine: SearchEngine,
+    newTabId?: string,
+    newPosition?: number
+  ) => {
     if (!editEngineTarget) return;
 
     const newConfig = { ...config };
-    const tabIndex = newConfig.tabs.findIndex(
+    const oldTabIndex = newConfig.tabs.findIndex(
       (tab) => tab.id === editEngineTarget.tabId
     );
-    if (tabIndex !== -1) {
-      const engineIndex = newConfig.tabs[tabIndex].engines.findIndex(
-        (eng) => eng.id === editEngineTarget.engineId
+
+    if (oldTabIndex === -1) return;
+
+    const engineIndex = newConfig.tabs[oldTabIndex].engines.findIndex(
+      (eng) => eng.id === editEngineTarget.engineId
+    );
+
+    if (engineIndex === -1) return;
+
+    // タブの変更があるか確認
+    const targetTabId = newTabId || editEngineTarget.tabId;
+    const isTabChanged = targetTabId !== editEngineTarget.tabId;
+
+    if (isTabChanged) {
+      // 別のタブに移動する場合
+      const newTabIndex = newConfig.tabs.findIndex(
+        (tab) => tab.id === targetTabId
       );
-      if (engineIndex !== -1) {
-        const engines = [...newConfig.tabs[tabIndex].engines];
+      if (newTabIndex === -1) return;
+
+      // 元のタブから削除
+      newConfig.tabs[oldTabIndex] = {
+        ...newConfig.tabs[oldTabIndex],
+        engines: newConfig.tabs[oldTabIndex].engines.filter(
+          (_, i) => i !== engineIndex
+        ),
+      };
+
+      // 新しいタブに追加（先頭に配置、またはnewPositionが指定されていればその位置に）
+      const targetEngines = [...newConfig.tabs[newTabIndex].engines];
+      const insertPosition =
+        newPosition !== undefined ? newPosition : 0;
+      targetEngines.splice(insertPosition, 0, updatedEngine);
+      newConfig.tabs[newTabIndex] = {
+        ...newConfig.tabs[newTabIndex],
+        engines: targetEngines,
+      };
+    } else {
+      // 同じタブ内での編集
+      const engines = [...newConfig.tabs[oldTabIndex].engines];
+
+      // 位置が変更される場合
+      if (newPosition !== undefined && newPosition !== engineIndex) {
+        // 一旦削除
+        engines.splice(engineIndex, 1);
+        // 新しい位置に挿入
+        engines.splice(newPosition, 0, updatedEngine);
+      } else {
+        // 位置変更なし、データのみ更新
         engines[engineIndex] = updatedEngine;
-        newConfig.tabs[tabIndex] = {
-          ...newConfig.tabs[tabIndex],
-          engines,
-        };
-        setConfig(newConfig);
-        saveConfig(newConfig);
       }
+
+      newConfig.tabs[oldTabIndex] = {
+        ...newConfig.tabs[oldTabIndex],
+        engines,
+      };
     }
+
+    setConfig(newConfig);
+    saveConfig(newConfig);
     setEditEngineTarget(null);
   };
 
@@ -431,6 +480,50 @@ export function App() {
     setHoverIndex(null);
   };
 
+  const handleDropOnTab = (targetTabId: string) => {
+    if (!draggedItem) return;
+
+    const newConfig = { ...config };
+    const sourceTabIndex = newConfig.tabs.findIndex(
+      (tab) => tab.id === draggedItem.sourceTabId
+    );
+    const targetTabIndex = newConfig.tabs.findIndex(
+      (tab) => tab.id === targetTabId
+    );
+
+    if (sourceTabIndex === -1 || targetTabIndex === -1) return;
+
+    // 同じタブへのドロップは無視
+    if (draggedItem.sourceTabId === targetTabId) {
+      setDraggedItem(null);
+      return;
+    }
+
+    const draggedEngine =
+      newConfig.tabs[sourceTabIndex].engines[draggedItem.sourceIndex];
+
+    // 元のタブから削除
+    newConfig.tabs[sourceTabIndex] = {
+      ...newConfig.tabs[sourceTabIndex],
+      engines: newConfig.tabs[sourceTabIndex].engines.filter(
+        (_, i) => i !== draggedItem.sourceIndex
+      ),
+    };
+
+    // 新しいタブの先頭に追加
+    const targetEngines = [...newConfig.tabs[targetTabIndex].engines];
+    targetEngines.unshift(draggedEngine);
+    newConfig.tabs[targetTabIndex] = {
+      ...newConfig.tabs[targetTabIndex],
+      engines: targetEngines,
+    };
+
+    setConfig(newConfig);
+    saveConfig(newConfig);
+    setDraggedItem(null);
+    setActiveTabId(targetTabId); // 移動先のタブに切り替え
+  };
+
   const handleConfigImport = (newConfig: Config) => {
     setConfig(newConfig);
     saveConfig(newConfig);
@@ -484,6 +577,7 @@ export function App() {
           onTabDelete={handleDeleteTabRequest}
           onTabEdit={handleEditTabRequest}
           onAddTab={handleAddTabRequest}
+          onDropEngine={handleDropOnTab}
         />
 
         {activeTab && (
@@ -570,9 +664,15 @@ export function App() {
           const engine = tab?.engines.find(
             (e) => e.id === editEngineTarget.engineId
           );
-          return engine ? (
+          const currentPosition =
+            tab?.engines.findIndex((e) => e.id === editEngineTarget.engineId) ??
+            0;
+          return engine && tab ? (
             <EditEngineModal
               engine={engine}
+              currentTabId={editEngineTarget.tabId}
+              currentPosition={currentPosition}
+              allTabs={config.tabs}
               onSave={handleEditEngine}
               onCancel={handleEditEngineCancel}
             />

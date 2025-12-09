@@ -6,6 +6,8 @@
   
 ![screenshot](https://raw.githubusercontent.com/TweeTeaFOX223/world-dev-info-metasearcher/refs/heads/main/ScreenShot4.png)     
   
+![screenshot](https://raw.githubusercontent.com/TweeTeaFOX223/world-dev-info-metasearcher/refs/heads/main/ScreenShot5.png)     
+  
 ## アプリの概要 
 World Dev Info Meta Searcher（WDIMS）は、Claude Codeでサクッと開発した軽量メタ検索エンジンです。検索窓に単語を入力してエンターすると、開発技術＋αの情報収集に有用と思われる検索結果のURLのリストを表示します。  
   

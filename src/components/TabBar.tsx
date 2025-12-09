@@ -10,6 +10,7 @@ interface TabBarProps {
   onTabDelete?: (tabId: string) => void;
   onTabEdit?: (tabId: string) => void;
   onAddTab?: (position: number) => void;
+  onDropEngine?: (tabId: string) => void;
 }
 
 export function TabBar({
@@ -21,12 +22,17 @@ export function TabBar({
   onTabDelete,
   onTabEdit,
   onAddTab,
+  onDropEngine,
 }: TabBarProps) {
   const [draggedTabIndex, setDraggedTabIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+  const [engineDropHoverTabId, setEngineDropHoverTabId] = useState<
+    string | null
+  >(null);
 
   const handleDragStart = (e: DragEvent, index: number) => {
     e.dataTransfer!.effectAllowed = "move";
+    e.dataTransfer!.setData("tab-drag", "true");
     setDraggedTabIndex(index);
   };
 
@@ -49,6 +55,30 @@ export function TabBar({
     }
     setDraggedTabIndex(null);
     setDragOverIndex(null);
+  };
+
+  const handleEngineDragOver = (e: DragEvent, tabId: string) => {
+    // タブ自体のドラッグではなく、エンジンのドラッグの場合のみ処理
+    const isTabDrag = e.dataTransfer?.types.includes("tab-drag");
+    if (!isTabDrag && editMode) {
+      e.preventDefault();
+      e.stopPropagation();
+      setEngineDropHoverTabId(tabId);
+    }
+  };
+
+  const handleEngineDragLeave = () => {
+    setEngineDropHoverTabId(null);
+  };
+
+  const handleEngineDrop = (e: DragEvent, tabId: string) => {
+    const isTabDrag = e.dataTransfer?.types.includes("tab-drag");
+    if (!isTabDrag && editMode && onDropEngine) {
+      e.preventDefault();
+      e.stopPropagation();
+      onDropEngine(tabId);
+      setEngineDropHoverTabId(null);
+    }
   };
 
   const handleDeleteClick = (e: Event, tabId: string) => {
@@ -90,6 +120,8 @@ export function TabBar({
                   activeTabId === tab.id ? "active" : ""
                 } ${isDragging ? "dragging" : ""} ${
                   editMode ? "edit-mode" : ""
+                } ${
+                  engineDropHoverTabId === tab.id ? "engine-drop-hover" : ""
                 }`}
                 role="tab"
                 aria-selected={activeTabId === tab.id}
@@ -99,8 +131,27 @@ export function TabBar({
                   editMode && handleDragStart(e, originalIndex)
                 }
                 onDragEnd={handleDragEnd}
-                onDragOver={(e) => editMode && handleDragOver(e, displayIndex)}
-                onDrop={(e) => editMode && handleDrop(e, displayIndex)}
+                onDragOver={(e) => {
+                  if (editMode) {
+                    const isTabDrag = e.dataTransfer?.types.includes("tab-drag");
+                    if (isTabDrag) {
+                      handleDragOver(e, displayIndex);
+                    } else {
+                      handleEngineDragOver(e, tab.id);
+                    }
+                  }
+                }}
+                onDragLeave={handleEngineDragLeave}
+                onDrop={(e) => {
+                  if (editMode) {
+                    const isTabDrag = e.dataTransfer?.types.includes("tab-drag");
+                    if (isTabDrag) {
+                      handleDrop(e, displayIndex);
+                    } else {
+                      handleEngineDrop(e, tab.id);
+                    }
+                  }
+                }}
               >
                 {editMode && onTabEdit && (
                   <span
