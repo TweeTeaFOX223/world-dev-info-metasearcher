@@ -2,7 +2,7 @@
   "name": "World Dev Info Meta Searcher",
   "short_name": "WDIMS",
   "description": "開発技術+αの情報収集に使える軽量メタ検索エンジン",
-  "start_url": "/world-dev-info-metasearcher/",
+  "start_url": "https://tweeteafox223.github.io/world-dev-info-metasearcher/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#3b82f6",
