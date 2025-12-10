@@ -9,6 +9,7 @@ const __dirname = dirname(__filename);
 export default defineConfig({
   plugins: [preact()],
   root: resolve(__dirname, "src"),
+  publicDir: resolve(__dirname, "public"),
   build: {
     outDir: resolve(__dirname, "dist"),
     emptyOutDir: true,

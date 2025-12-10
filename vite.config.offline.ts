@@ -11,6 +11,7 @@ const __dirname = dirname(__filename);
 export default defineConfig({
   plugins: [preact(), viteSingleFile()],
   root: resolve(__dirname, "src"),
+  publicDir: resolve(__dirname, "public"),
   build: {
     outDir: resolve(__dirname, "dist-offline"),
     emptyOutDir: true,

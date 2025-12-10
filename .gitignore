@@ -8,9 +8,14 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+
 dist
 dist-ssr
 *.local
+
+# 単一HTMlを出すディレクトリ
+dist-offline
+!dist-offline/index.html
 
 # Editor directories and files
 .vscode/*
