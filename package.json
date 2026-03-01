@@ -13,7 +13,7 @@
   "dependencies": {
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
-    "preact": "^10.27.2"
+    "preact": "^10.28.4"
   },
   "devDependencies": {
     "@eslint/css": "^0.14.1",
